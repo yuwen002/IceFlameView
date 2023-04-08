@@ -35,7 +35,6 @@
 
 import { ElLoading } from 'element-plus'
 import router from '@/router'
-// import store from '@/store'
 import { TOKEN } from '@/pinia/modules/app' // TOKEN变量名
 import { nextTick } from 'vue'
 import { useApp } from './pinia/modules/app'

@@ -12,7 +12,7 @@
 <template>
   <div class="login">
     <el-form class="form" :model="model" :rules="rules" ref="loginForm">
-      <h1 class="title">Vue3 Element Admin</h1>
+      <h1 class="title">Ice Flame Webmaster</h1>
       <el-form-item prop="userName">
         <el-input
           class="text"
@@ -92,8 +92,8 @@ export default defineComponent({
           trigger: 'blur',
         },
         {
-          min: 6,
-          max: 12,
+          min: 5,
+          max: 32,
           message: ctx.$t('login.rules-regpassword'),
           trigger: 'blur',
         },
@@ -101,8 +101,8 @@ export default defineComponent({
     })
     const state = reactive({
       model: {
-        userName: 'admin',
-        password: '123456',
+        userName: '',
+        password: '',
       },
       rules: getRules(),
       loading: false,

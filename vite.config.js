@@ -77,9 +77,9 @@ export default env => {
       open: true,
       proxy: {
         '/api': {
-          target: 'http://dev.api.xxx.com', // 后端接口的域名
+          target: 'http://127.0.0.1:8000', // 后端接口的域名
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, ''),
+          path: path => path.replace(/^\/api/, ''),
         },
       },
     },
