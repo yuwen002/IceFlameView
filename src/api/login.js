@@ -23,7 +23,7 @@ export const Login = data => {
 // 获取登录用户信息
 export const GetUserinfo = () => {
   return request({
-    url: '/api/userinfo',
+    url: '/manage/master/info',
     method: 'get',
   })
 }
