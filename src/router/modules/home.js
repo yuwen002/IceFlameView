@@ -15,7 +15,7 @@ const Home = () => import('@/views/home/index.vue')
 
 export default [
   {
-    path: '/home',
+    path: '',
     component: Layout,
     name: 'Dashboard',
     meta: {

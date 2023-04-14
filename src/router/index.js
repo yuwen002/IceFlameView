@@ -45,7 +45,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login',
+      redirect: '/home',
     },
     ...redirect, // 统一的重定向配置
     ...login,

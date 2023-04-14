@@ -24,7 +24,7 @@ export const useAccount = defineStore('account', {
     },
     // 获取用户信息
     async getUserinfo() {
-      const { code, message, data } = await GetUserinfo()
+      const { code, data } = await GetUserinfo()
       if (+code === 0) {
         this.userinfo = data
         return Promise.resolve(data)

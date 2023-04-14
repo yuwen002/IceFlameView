@@ -56,12 +56,14 @@ let loadingInstance = null
 
 // vue-router4的路由守卫不再是通过next放行，而是通过return返回true或false或者一个路由地址
 router.beforeEach(async to => {
+  console.log(to)
   loadingInstance = ElLoading.service({
     lock: true,
     // text: '正在加载数据，请稍候~',
     background: 'rgba(0, 0, 0, 0.7)',
   })
 
+  console.log(to.name)
   if (WhiteList.includes(to.name)) {
     return true
   }
@@ -84,7 +86,6 @@ router.beforeEach(async to => {
         loadingInstance.close()
         return false
       }
-
       return to.fullPath
     }
 
