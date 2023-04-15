@@ -1,543 +1,263 @@
-<!--
- *                        .::::.
- *                      .::::::::.
- *                     :::::::::::
- *                  ..:::::::::::'
- *               '::::::::::::'
- *                 .::::::::::
- *            '::::::::::::::..
- *                 ..::::::::::::.
- *               ``::::::::::::::::
- *                ::::``:::::::::'        .:::.
- *               ::::'   ':::::'       .::::::::.
- *             .::::'      ::::     .:::::::'::::.
- *            .:::'       :::::  .:::::::::' ':::::.
- *           .::'        :::::.:::::::::'      ':::::.
- *          .::'         ::::::::::::::'         ``::::.
- *      ...:::           ::::::::::::'              ``::.
- *     ````':.          ':::::::::'                  ::::..
- *                        '.:::::'                    ':'````..
- * 
- * @Descripttion: 
- * @version: 
- * @Date: 2021-04-20 11:06:21
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-25 11:53:47
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
- -->
+<!-- 📚📚📚 Pro-Table 文档: https://juejin.cn/post/7166068828202336263 -->
 
 <template>
-  <div class="page-box">
-    <!-- 搜索选项 -->
+  <!-- 查询表单 card -->
+  <SearchForm
+    :search="search"
+    :reset="reset"
+    :search-param="searchParam"
+    :columns="searchColumns"
+    :search-col="searchCol"
+    v-show="isShowSearch"
+  />
 
-    <el-form
-      v-if="!!search"
-      class="search"
-      :model="searchModel"
-      :inline="true"
-      label-position="right"
-      :label-width="search.labelWidth"
-      ref="searchForm"
-    >
-      <el-form-item
-        v-for="item in search.fields"
-        :key="item.name"
-        :label="$t(item.label)"
-        :prop="item.name"
-      >
-        <slot v-if="item.type === 'custom'" :name="item.slot" />
-        <el-select
-          v-else-if="item.type === 'select'"
-          v-model="searchModel[item.name]"
-          :filterable="!!item.filterable"
-          :multiple="!!item.multiple"
-          clearable
-          :placeholder="$t(item.label)"
-          :style="{ width: search.inputWidth, ...item.style }"
-        >
-          <el-option
-            v-for="option of item.options"
-            :key="option.value"
-            :label="$t(option.name)"
-            :value="option.value"
-          ></el-option>
-        </el-select>
-        <el-radio-group
-          v-model="searchModel[item.name]"
-          v-else-if="item.type === 'radio'"
-          :style="{ width: search.inputWidth, ...item.style }"
-        >
-          <el-radio
-            v-for="option of item.options"
-            :key="option.value"
-            :label="option.value"
-          >
-            {{ $t(option.name) }}
-          </el-radio>
-        </el-radio-group>
-        <el-radio-group
-          v-model="searchModel[item.name]"
-          v-else-if="item.type === 'radio-button'"
-          :style="{ width: search.inputWidth, ...item.style }"
-        >
-          <el-radio-button
-            v-for="option of item.options"
-            :key="option.value"
-            :label="option.value"
-          >
-            {{ $t(option.name) }}
-          </el-radio-button>
-        </el-radio-group>
-        <el-checkbox-group
-          v-model="searchModel[item.name]"
-          v-else-if="item.type === 'checkbox'"
-          :style="{ width: search.inputWidth, ...item.style }"
-        >
-          <el-checkbox
-            v-for="option of item.options"
-            :key="option.value"
-            :label="option.value"
-          >
-            {{ $t(option.name) }}
-          </el-checkbox>
-        </el-checkbox-group>
-        <el-checkbox-group
-          v-model="searchModel[item.name]"
-          v-else-if="item.type === 'checkbox-button'"
-          :style="{ width: search.inputWidth, ...item.style }"
-        >
-          <el-checkbox-button
-            v-for="option of item.options"
-            :key="option.value"
-            :label="option.value"
-          >
-            {{ $t(option.name) }}
-          </el-checkbox-button>
-        </el-checkbox-group>
-        <el-date-picker
-          v-else-if="item.type === 'date'"
-          v-model="searchModel[item.name]"
-          type="date"
-          format="YYYY-MM-DD"
-          clearable
-          @change="handleDateChange($event, item, 'YYYY-MM-DD')"
-          :placeholder="$t(item.label)"
-          :style="{ width: search.inputWidth, ...item.style }"
-        ></el-date-picker>
-        <el-date-picker
-          v-else-if="item.type === 'datetime'"
-          v-model="searchModel[item.name]"
-          type="datetime"
-          clearable
-          @change="handleDateChange($event, item, 'YYYY-MM-DD HH:mm:ss')"
-          format="YYYY-MM-DD HH:mm:ss"
-          :placeholder="$t(item.label)"
-          :style="{ width: search.inputWidth, ...item.style }"
-        ></el-date-picker>
-        <el-date-picker
-          v-else-if="item.type === 'daterange'"
-          v-model="searchModel[item.name]"
-          type="daterange"
-          format="YYYY-MM-DD"
-          range-separator="-"
-          :start-placeholder="$t('public.startdate')"
-          :end-placeholder="$t('public.enddate')"
-          clearable
-          @change="handleRangeChange($event, item, 'YYYY-MM-DD')"
-          :style="{ ...item.style }"
-        ></el-date-picker>
-        <el-date-picker
-          v-else-if="item.type === 'datetimerange'"
-          v-model="searchModel[item.name]"
-          type="datetimerange"
-          format="YYYY-MM-DD HH:mm:ss"
-          range-separator="-"
-          :start-placeholder="$t('public.starttime')"
-          :end-placeholder="$t('public.endtime')"
-          clearable
-          @change="handleRangeChange($event, item, 'YYYY-MM-DD HH:mm:ss')"
-          :style="{ ...item.style }"
-        ></el-date-picker>
-        <el-input-number
-          v-else-if="item.type === 'number'"
-          v-model="searchModel[item.name]"
-          :placeholder="$t(item.label)"
-          controls-position="right"
-          :min="item.min"
-          :max="item.max"
-          :style="{ width: search.inputWidth, ...item.style }"
-        />
-        <el-input
-          v-else-if="item.type === 'textarea'"
-          :maxlength="item.maxlength"
-          type="textarea"
-          clearable
-          v-model="searchModel[item.name]"
-          :placeholder="$t(item.label)"
-          :style="{ width: search.inputWidth, ...item.style }"
-        ></el-input>
-        <el-input
-          v-else
-          :maxlength="item.maxlength"
-          v-model="searchModel[item.name]"
-          clearable
-          :placeholder="$t(item.label)"
-          :style="{ width: search.inputWidth, ...item.style }"
-        ></el-input>
-      </el-form-item>
-      <el-form-item class="search-btn">
-        <el-button type="primary" icon="Search" @click="handleSearch">
-          {{ $t('public.search') }}
-        </el-button>
-        <el-button @click="handleReset" icon="RefreshRight">
-          {{ $t('public.reset') }}
-        </el-button>
-      </el-form-item>
-    </el-form>
-
-    <!-- title 和 工具栏 -->
-    <div class="head" v-if="!hideTitleBar">
-      <slot name="title">
-        <span class="title">{{ title }}</span>
-      </slot>
-      <div class="toolbar">
-        <slot name="toolbar"></slot>
+  <!-- 表格内容 card -->
+  <div class="card table-main">
+    <!-- 表格头部 操作按钮 -->
+    <div class="table-header">
+      <div class="header-button-lf">
+        <slot name="tableHeader" :selectedListIds="selectedListIds" :selectedList="selectedList" :isSelected="isSelected" />
+      </div>
+      <div class="header-button-ri" v-if="toolButton">
+        <slot name="toolButton">
+          <el-button :icon="Refresh" circle @click="getTableList" />
+          <el-button :icon="Printer" circle v-if="columns.length" @click="handlePrint" />
+          <el-button :icon="Operation" circle v-if="columns.length" @click="openColSetting" />
+          <el-button :icon="Search" circle v-if="searchColumns.length" @click="isShowSearch = !isShowSearch" />
+        </slot>
       </div>
     </div>
-    <!-- table表格栏 -->
-    <div class="table">
-      <el-table
-        v-loading="loading"
-        :data="tableData"
-        :row-key="rowKey"
-        tooltip-effect="dark"
-        stripe
-        :border="border"
-        @selection-change="handleSelectionChange"
-      >
+    <!-- 表格主体 -->
+    <el-table
+      ref="tableRef"
+      v-bind="$attrs"
+      :data="tableData"
+      :border="border"
+      :row-key="rowKey"
+      @selection-change="selectionChange"
+    >
+      <!-- 默认插槽 -->
+      <slot></slot>
+      <template v-for="item in tableColumns" :key="item">
+        <!-- selection || index -->
         <el-table-column
-          v-for="item in columns"
-          :key="item.label"
-          :filter-method="item.filters && filterHandler"
-          :show-overflow-tooltip="!item.wrap"
           v-bind="item"
-          :label="item.label ? $t(item.label) : ''"
+          :align="item.align ?? 'center'"
+          :reserve-selection="item.type == 'selection'"
+          v-if="item.type == 'selection' || item.type == 'index'"
         >
-          <template #header="scope" v-if="!!item.labelSlot">
-            <slot :name="item.labelSlot" v-bind="scope"></slot>
-          </template>
-          <template #default="scope" v-if="!!item.tdSlot">
-            <slot :name="item.tdSlot" v-bind="scope"></slot>
-          </template>
         </el-table-column>
-      </el-table>
-    </div>
-    <!-- 分页 -->
-    <el-pagination
-      v-if="paginationConfig.show && total > 0"
-      class="pagination"
-      :style="paginationConfig.style"
-      @size-change="handleSizeChange"
-      v-model:currentPage="pageNum"
-      @current-change="handleCurrentChange"
-      :page-sizes="paginationConfig.pageSizes"
-      v-model:pageSize="pageSize"
-      :layout="paginationConfig.layout"
-      :total="total"
-    ></el-pagination>
+        <!-- expand 支持 tsx 语法 && 作用域插槽 (tsx > slot) -->
+        <el-table-column v-bind="item" :align="item.align ?? 'center'" v-if="item.type == 'expand'" v-slot="scope">
+          <component :is="item.render" v-bind="scope" v-if="item.render"> </component>
+          <slot :name="item.type" v-bind="scope" v-else></slot>
+        </el-table-column>
+        <!-- other 循环递归 -->
+        <TableColumn v-if="!item.type && item.prop && item.isShow" :column="item">
+          <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+            <slot :name="slot" v-bind="scope"></slot>
+          </template>
+        </TableColumn>
+      </template>
+      <!-- 插入表格最后一行之后的插槽 -->
+      <template #append>
+        <slot name="append"> </slot>
+      </template>
+      <!-- 表格无数据情况 -->
+      <template #empty>
+        <div class="table-empty">
+          <slot name="empty">
+            <img src="@/assets/images/notData.png" alt="notData" />
+            <div>暂无数据</div>
+          </slot>
+        </div>
+      </template>
+    </el-table>
+    <!-- 分页组件 -->
+    <slot name="pagination">
+      <Pagination
+        v-if="pagination"
+        :pageable="pageable"
+        :handle-size-change="handleSizeChange"
+        :handle-current-change="handleCurrentChange"
+      />
+    </slot>
   </div>
+  <!-- 列设置 -->
+  <ColSetting v-if="toolButton" ref="colRef" v-model:col-setting="colSetting" />
 </template>
-<script>
-import { defineComponent, reactive, toRefs, onBeforeMount, watch } from 'vue'
-const formatDate = (date, format) => {
-  var obj = {
-    'M+': date.getMonth() + 1,
-    'D+': date.getDate(),
-    'H+': date.getHours(),
-    'm+': date.getMinutes(),
-    's+': date.getSeconds(),
-    'q+': Math.floor((date.getMonth() + 3) / 3),
-    'S+': date.getMilliseconds(),
-  }
-  if (/(y+)/i.test(format)) {
-    format = format.replace(
-      RegExp.$1,
-      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
-    )
-  }
-  for (var k in obj) {
-    if (new RegExp('(' + k + ')').test(format)) {
-      format = format.replace(
-        RegExp.$1,
-        RegExp.$1.length == 1
-          ? obj[k]
-          : ('00' + obj[k]).substr(('' + obj[k]).length)
-      )
-    }
-  }
-  return format
+
+<script setup lang="ts" name="ProTable">
+import { ref, watch, computed, provide, onMounted } from "vue";
+import { useTable } from "@/hooks/useTable";
+import { useSelection } from "@/hooks/useSelection";
+import { BreakPoint } from "@/components/Grid/interface";
+import { ColumnProps } from "@/components/ProTable/interface";
+import { ElTable, TableProps } from "element-plus";
+import { Refresh, Printer, Operation, Search } from "@element-plus/icons-vue";
+import { filterEnum, formatValue, handleProp, handleRowAccordingToProp } from "@/utils";
+import SearchForm from "@/components/SearchForm/index.vue";
+import Pagination from "./components/Pagination.vue";
+import ColSetting from "./components/ColSetting.vue";
+import TableColumn from "./components/TableColumn.vue";
+import printJS from "print-js";
+
+interface ProTableProps extends Partial<Omit<TableProps<any>, "data">> {
+  columns: ColumnProps[]; // 列配置项
+  requestApi: (params: any) => Promise<any> | any; // 请求表格数据的 api ==> 非必传
+  requestAuto?: boolean; // 是否自动执行请求 api ==> 非必传（默认为true）
+  requestError?: (params: any) => void; // 表格 api 请求错误监听 ==> 非必传
+  dataCallback?: (data: any) => any; // 返回数据的回调函数，可以对数据进行处理 ==> 非必传
+  title?: string; // 表格标题，目前只在打印的时候用到 ==> 非必传
+  pagination?: boolean; // 是否需要分页组件 ==> 非必传（默认为true）
+  initParam?: any; // 初始化请求参数 ==> 非必传（默认为{}）
+  border?: boolean; // 是否带有纵向边框 ==> 非必传（默认为true）
+  toolButton?: boolean; // 是否显示表格功能按钮 ==> 非必传（默认为true）
+  rowKey?: string; // 行数据的 Key，用来优化 Table 的渲染，当表格数据多选时，所指定的 id ==> 非必传（默认为 id）
+  searchCol?: number | Record<BreakPoint, number>; // 表格搜索项 每列占比配置 ==> 非必传 { xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }
 }
-const getSearchModel = search => {
-  const searchModel = {}
-  if (search && search.fields) {
-    search.fields.forEach(item => {
-      switch (item.type) {
-        case 'checkbox':
-        case 'checkbox-button':
-          searchModel[item.name] = []
-          break
-        default:
-          break
-      }
-      if (item.defaultValue !== undefined) {
-        searchModel[item.name] = item.defaultValue
-        // 日期范围和时间范围真实变量默认值
-        if (
-          (item.type === 'daterange' || item.type === 'datetimerange') &&
-          !!item.trueNames &&
-          Array.isArray(item.defaultValue)
-        ) {
-          item.defaultValue.forEach((val, index) => {
-            searchModel[item.trueNames[index]] = val
-          })
-        }
-      }
-    })
+
+// 接受父组件参数，配置默认值
+const props = withDefaults(defineProps<ProTableProps>(), {
+  requestAuto: true,
+  columns: () => [],
+  pagination: true,
+  initParam: {},
+  border: true,
+  toolButton: true,
+  rowKey: "id",
+  searchCol: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 })
+});
+
+// 是否显示搜索模块
+const isShowSearch = ref(true);
+
+// 表格 DOM 元素
+const tableRef = ref<InstanceType<typeof ElTable>>();
+
+// 表格多选 Hooks
+const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey);
+
+// 表格操作 Hooks
+const { tableData, pageable, searchParam, searchInitParam, getTableList, search, reset, handleSizeChange, handleCurrentChange } =
+  useTable(props.requestApi, props.initParam, props.pagination, props.dataCallback, props.requestError);
+
+// 清空选中数据列表
+const clearSelection = () => tableRef.value!.clearSelection();
+
+// 初始化请求
+onMounted(() => props.requestAuto && getTableList());
+
+// 监听页面 initParam 改化，重新获取表格数据
+watch(() => props.initParam, getTableList, { deep: true });
+
+// 接收 columns 并设置为响应式
+const tableColumns = ref<ColumnProps[]>(props.columns);
+
+// 定义 enumMap 存储 enum 值（避免异步请求无法格式化单元格内容 || 无法填充搜索下拉选择）
+const enumMap = ref(new Map<string, { [key: string]: any }[]>());
+provide("enumMap", enumMap);
+const setEnumMap = async (col: ColumnProps) => {
+  if (!col.enum) return;
+  // 如果当前 enum 为后台数据需要请求数据，则调用该请求接口，并存储到 enumMap
+  if (typeof col.enum !== "function") return enumMap.value.set(col.prop!, col.enum!);
+  const { data } = await col.enum();
+  enumMap.value.set(col.prop!, data);
+};
+
+// 扁平化 columns
+const flatColumnsFunc = (columns: ColumnProps[], flatArr: ColumnProps[] = []) => {
+  columns.forEach(async col => {
+    if (col._children?.length) flatArr.push(...flatColumnsFunc(col._children));
+    flatArr.push(col);
+
+    // 给每一项 column 添加 isShow && isFilterEnum 默认属性
+    col.isShow = col.isShow ?? true;
+    col.isFilterEnum = col.isFilterEnum ?? true;
+
+    // 设置 enumMap
+    setEnumMap(col);
+  });
+  return flatArr.filter(item => !item._children?.length);
+};
+
+// flatColumns
+const flatColumns = ref<ColumnProps[]>();
+flatColumns.value = flatColumnsFunc(tableColumns.value);
+
+// 过滤需要搜索的配置项
+const searchColumns = flatColumns.value.filter(item => item.search?.el);
+
+// 设置搜索表单排序默认值 && 设置搜索表单项的默认值
+searchColumns.forEach((column, index) => {
+  column.search!.order = column.search!.order ?? index + 2;
+  if (column.search?.defaultValue !== undefined && column.search?.defaultValue !== null) {
+    searchInitParam.value[column.search.key ?? handleProp(column.prop!)] = column.search?.defaultValue;
+    searchParam.value[column.search.key ?? handleProp(column.prop!)] = column.search?.defaultValue;
   }
-  return searchModel
-}
-export default defineComponent({
-  props: {
-    // 请求数据的方法
-    request: {
-      type: Function,
-    },
-    // 表格标题
-    title: {
-      type: String,
-      default: '',
-    },
-    // 是否隐藏标题栏
-    hideTitleBar: {
-      type: Boolean,
-      default: false,
-    },
-    // 是否隐藏按钮操作
-    hideToolbar: {
-      type: Boolean,
-      default: false,
-    },
-    // 搜索表单配置，false表示不显示搜索表单
-    search: {
-      type: [Boolean, Object],
-      default: false,
-    },
-    border: {
-      type: Boolean,
-      default: false,
-    },
-    // 表头配置
-    columns: {
-      type: Array,
-      default: () => [],
-    },
-    // 行数据的Key，同elementUI的table组件的row-key
-    rowKey: {
-      type: [String, Function],
-      default: () => {},
-    },
-    // 分页配置，false表示不显示分页
-    pagination: {
-      type: [Boolean, Object],
-      default: () => ({}),
-    },
-  },
-  setup(props, { emit }) {
-    // 优化搜索字段，
-    // 1、如果搜索配置有transform处理函数，执行transform
-    // 2、删除日期范围默认的name字段
-    const optimizeFields = search => {
-      const searchModel = JSON.parse(JSON.stringify(state.searchModel))
-      if (search && search.fields) {
-        search.fields.forEach(item => {
-          if (!searchModel.hasOwnProperty(item.name)) {
-            return
-          }
-          if (item.transform) {
-            searchModel[item.name] = item.transform(searchModel[item.name])
-          }
-          if (
-            (item.type === 'daterange' || item.type === 'datetimerange') &&
-            !!item.trueNames
-          ) {
-            delete searchModel[item.name]
-          }
-        })
+});
+
+// 排序搜索表单项
+searchColumns.sort((a, b) => a.search!.order! - b.search!.order!);
+
+// 列设置 ==> 过滤掉不需要设置的列
+const colRef = ref();
+const colSetting = tableColumns.value!.filter(
+  item => !["selection", "index", "expand"].includes(item.type!) && item.prop !== "operation" && item.isShow
+);
+const openColSetting = () => colRef.value.openColSetting();
+
+// 🙅‍♀️ 不需要打印可以把以下方法删除，打印功能目前存在很多 bug（目前数据处理比较复杂 209-246 行）
+// 处理打印数据（把后台返回的值根据 enum 做转换）
+const printData = computed(() => {
+  const printDataList = JSON.parse(JSON.stringify(selectedList.value.length ? selectedList.value : tableData.value));
+  // 找出需要转换数据的列（有 enum || 多级 prop && 需要根据 enum 格式化）
+  const needTransformCol = flatColumns.value!.filter(
+    item => (item.enum || (item.prop && item.prop.split(".").length > 1)) && item.isFilterEnum
+  );
+  needTransformCol.forEach(colItem => {
+    printDataList.forEach((tableItem: { [key: string]: any }) => {
+      tableItem[handleProp(colItem.prop!)] =
+        colItem.prop!.split(".").length > 1 && !colItem.enum
+          ? formatValue(handleRowAccordingToProp(tableItem, colItem.prop!))
+          : filterEnum(handleRowAccordingToProp(tableItem, colItem.prop!), enumMap.value.get(colItem.prop!), colItem.fieldNames);
+      for (const key in tableItem) {
+        if (tableItem[key] === null) tableItem[key] = formatValue(tableItem[key]);
       }
-      return searchModel
-    }
+    });
+  });
+  return printDataList;
+});
 
-    // 请求列表数据
-    const getTableData = async () => {
-      state.loading = true
-      const searchModel = optimizeFields(props.search)
-      const { data, total } = await props.request({
-        current: state.pageNum,
-        size: state.pageSize,
-        ...searchModel,
-      })
-      state.loading = false
-      state.tableData = data
-      state.total = total
-    }
+// 打印表格数据（💥 多级表头数据打印时，只能扁平化成一维数组，printJs 不支持多级表头打印）
+const handlePrint = () => {
+  const header = `<div style="text-align: center"><h2>${props.title}</h2></div>`;
+  const gridHeaderStyle = "border: 1px solid #ebeef5;height: 45px;color: #232425;text-align: center;background-color: #fafafa;";
+  const gridStyle = "border: 1px solid #ebeef5;height: 40px;color: #494b4e;text-align: center";
+  printJS({
+    printable: printData.value,
+    header: props.title && header,
+    properties: flatColumns
+      .value!.filter(item => !["selection", "index", "expand"].includes(item.type!) && item.isShow && item.prop !== "operation")
+      .map((item: ColumnProps) => ({ field: handleProp(item.prop!), displayName: item.label })),
+    type: "json",
+    gridHeaderStyle,
+    gridStyle
+  });
+};
 
-    const state = reactive({
-      searchModel: getSearchModel(props.search),
-      loading: false,
-      tableData: [],
-      total: 0,
-      pageNum: 1,
-      pageSize: (!!props.pagination && props.pagination.pageSize) || 10,
-      paginationConfig: {
-        show: false,
-      },
-      // 搜索
-      handleSearch() {
-        state.pageNum = 1
-        getTableData()
-      },
-      // 重置函数
-      handleReset() {
-        if (JSON.stringify(state.searchModel) === '{}') {
-          return
-        }
-        state.pageNum = 1
-        state.searchModel = getSearchModel(props.search)
-        getTableData()
-      },
-      // 刷新
-      refresh() {
-        getTableData()
-      },
-
-      // 当前页变化
-      handleCurrentChange() {
-        getTableData()
-      },
-      // 改变每页size数量
-      handleSizeChange() {
-        state.pageNum = 1
-        getTableData()
-      },
-      // 全选
-      handleSelectionChange(arr) {
-        emit('selectionChange', arr)
-      },
-      // 过滤方法
-      filterHandler(value, row, column) {
-        const property = column['property']
-        return row[property] === value
-      },
-      // 日期范围
-      handleDateChange(date, item, format) {
-        state.searchModel[item.name] = date ? formatDate(date, format) : ''
-      },
-      handleRangeChange(date, item, format) {
-        const arr = !!date && date.map(d => formatDate(d, format))
-        state.searchModel[item.name] = arr ? arr : []
-
-        if (!item.trueNames) {
-          return
-        }
-
-        if (arr) {
-          arr.forEach((val, index) => {
-            state.searchModel[item.trueNames[index]] = val
-          })
-        } else {
-          item.trueNames.forEach(key => {
-            delete state.searchModel[key]
-          })
-        }
-      },
-    })
-
-    if (typeof props.pagination === 'object') {
-      const { layout, pageSizes, style } = props.pagination
-      state.paginationConfig = {
-        show: true,
-        layout: layout || 'total, sizes, prev, pager, next, jumper',
-        pageSizes: pageSizes || [10, 20, 30, 40, 50, 100],
-        style: style || {},
-      }
-    }
-
-    watch(
-      () => props.search,
-      val => {
-        state.searchModel = getSearchModel(val)
-      },
-      { deep: true }
-    )
-
-    onBeforeMount(() => {
-      getTableData()
-    })
-
-    return {
-      ...toRefs(state),
-    }
-  },
-})
+// 暴露给父组件的参数和方法(外部需要什么，都可以从这里暴露出去)
+defineExpose({
+  element: tableRef,
+  tableData,
+  searchParam,
+  pageable,
+  getTableList,
+  reset,
+  clearSelection,
+  enumMap,
+  isSelected,
+  selectedList,
+  selectedListIds
+});
 </script>
-<style lang="scss" scoped>
-.page-box {
-  width: 100%;
-  box-sizing: border-box;
-  .search {
-    padding: 20px 20px 0;
-    background: #fff;
-    margin-bottom: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    .el-form-item {
-      margin-bottom: 20px;
-    }
-    .search-btn {
-      margin-left: auto;
-    }
-    :deep(.el-input-number .el-input__inner) {
-      text-align: left;
-    }
-    :deep(.el-range-editor.el-input__wrapper) {
-      box-sizing: border-box;
-    }
-  }
-
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 20px 0;
-    background: #fff;
-    .title {
-      font-size: 16px;
-    }
-  }
-  .table {
-    padding: 20px;
-    background: #fff;
-  }
-  .pagination {
-    padding: 0 20px 20px;
-    background: #fff;
-    justify-content: flex-end;
-    :last-child {
-      margin-right: 0;
-    }
-  }
-}
-</style>

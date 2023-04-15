@@ -1,75 +1,44 @@
-<!--
- *                   ___====-_  _-====___
- *             _--^^^#####//      \\#####^^^--_
- *          _-^##########// (    ) \\##########^-_
- *         -############//  |\^^/|  \\############-
- *       _/############//   (@::@)   \############\_
- *      /#############((     \\//     ))#############\
- *     -###############\\    (oo)    //###############-
- *    -#################\\  / VV \  //#################-
- *   -###################\\/      \//###################-
- *  _#/|##########/\######(   /\   )######/\##########|\#_
- *  |/ |#/\#/\#/\/  \#/\##\  |  |  /##/\#/  \/\#/\#/\#| \|
- *  `  |/  V  V  `   V  \#\| |  | |/#/  V   '  V  V  \|  '
- *     `   `  `      `   / | |  | | \   '      '  '   '
- *                      (  | |  | |  )
- *                     __\ | |  | | /__
- *                    (vvv(VVV)(VVV)vvv)
- * 
- *      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- * 
- *                神兽保佑            永无BUG
- * 
- * @Descripttion: 
- * @version: 
- * @Date: 2021-04-20 11:06:21
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-26 12:14:10
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
- -->
 <template>
-  <el-config-provider :locale="locales[lang]">
-    <router-view />
+  <el-config-provider :locale="locale" :size="assemblySize" :button="buttonConfig">
+    <router-view></router-view>
   </el-config-provider>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
-import { ElConfigProvider } from 'element-plus'
-import localeZH from 'element-plus/lib/locale/lang/zh-cn'
-import localeEN from 'element-plus/lib/locale/lang/en'
-import useLang from '@/i18n/useLang'
+<script setup lang="ts">
+import { onMounted, reactive, computed } from "vue";
+import { useI18n } from "vue-i18n";
+import { getBrowserLang } from "@/utils";
+import { useTheme } from "@/hooks/useTheme";
+import { ElConfigProvider } from "element-plus";
+import { useGlobalStore } from "@/stores/modules/global";
 
-export default defineComponent({
-  components: {
-    [ElConfigProvider.name]: ElConfigProvider,
-  },
-  setup() {
-    const { lang } = useLang()
-    return {
-      lang,
-      locales: {
-        'zh-cn': localeZH,
-        en: localeEN,
-      },
-    }
-  },
-})
+import en from "element-plus/es/locale/lang/en";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+
+const globalStore = useGlobalStore();
+
+// init theme
+const { initTheme } = useTheme();
+initTheme();
+
+// init language
+const i18n = useI18n();
+onMounted(() => {
+  const language = globalStore.language ?? getBrowserLang();
+  i18n.locale.value = language;
+  globalStore.setGlobalState("language", language);
+});
+
+// element language
+const locale = computed(() => {
+  if (globalStore.language == "zh") return zhCn;
+  if (globalStore.language == "en") return en;
+  return getBrowserLang() == "zh" ? zhCn : en;
+});
+
+// element assemblySize
+const assemblySize = computed(() => globalStore.assemblySize);
+
+// element button config
+const buttonConfig = reactive({ autoInsertSpace: false });
 </script>
-
-<style lang="scss">
-html,
-body,
-#app {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  * {
-    outline: none;
-  }
-}
-</style>
