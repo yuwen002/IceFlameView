@@ -1,206 +1,166 @@
-# Geeker-Admin
+<div align="center"> <a href="https://github.com/anncwb/vue-vben-admin"> <img alt="VbenAdmin Logo" width="200" height="200" src="https://anncwb.github.io/anncwb/images/logo.png"> </a> <br> <br>
 
-### 介绍 📖
+[![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
 
-Geeker-Admin 一款基于 Vue3.2、TypeScript、Vite4、Pinia、Element-Plus 开源的后台管理框架，使用目前最新技术栈开发。项目提供强大的 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，在一定程度上节省您的开发效率。另外本项目还封装了一些常用组件、Hooks、指令、动态路由、按钮级别权限控制等功能。
+<h1>Vue vben admin</h1>
+</div>
 
-### 在线预览 👀
+**English** | [中文](./README.zh-CN.md)
 
-- Link：https://admin.spicyboy.cn
+## Introduction
 
-### 代码仓库 ⭐
+Vue Vben Admin is a free and open source middle and back-end template. Using the latest `vue3`, `vite2`, `TypeScript` and other mainstream technology development, the out-of-the-box middle and back-end front-end solutions can also be used for learning reference.
 
-- Gitee：https://gitee.com/laramie/Geeker-Admin
-- GitHub：https://github.com/HalseySpicy/Geeker-Admin
+## Feature
 
-### 项目文档 📚
+- **State of The Art Development**：Use front-end front-end technology development such as Vue3/vite2
+- **TypeScript**: Application-level JavaScript language
+- **Theming**: Configurable themes
+- **International**：Built-in complete internationalization program
+- **Mock Server** Built-in mock data scheme
+- **Authority** Built-in complete dynamic routing permission generation scheme.
+- **Component** Multiple commonly used components are encapsulated twice
 
-- 项目更新日志：[CHANGELOG.md](./CHANGELOG.md)
+## Preview
 
-- 项目文档地址：https://docs.spicyboy.cn
+- [vue-vben-admin](https://vben.vvbin.cn/) - Full version Chinese site
+- [vue-vben-admin-gh-pages](https://anncwb.github.io/vue-vben-admin/) - Full version of the github site
+- [vben-admin-thin-next](https://vben.vvbin.cn/thin/next/) - Simplified Chinese site
+- [vben-admin-thin-gh-pages](https://anncwb.github.io/vben-admin-thin-next/) -Simplified github site
 
-### 项目功能 🔨
+Test account: vben/123456
 
-- 使用 Vue3.2 + TypeScript 开发，单文件组件**＜ script setup ＞**
-- 采用 Vite4 作为项目开发、打包工具（配置 Gzip 打包、TSX 语法、跨域代理…）
-- 使用 Pinia 替代 Vuex，轻量、简单、易用，集成 Pinia 持久化插件
-- 使用 TypeScript 对 Axios 整个二次封装（请求拦截、取消、常用请求封装…）
-- 基于 Element 二次封装 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，表格页面全部为配置项 columns
-- 支持 Element 组件大小切换、暗黑模式、i18n 国际化
-- 使用 VueRouter 进行路由权限拦截、页面按钮权限配置、路由懒加载
-- 使用 KeepAlive 对页面进行缓存，支持多级嵌套页面缓存
-- 常用自定义指令开发（权限、复制、水印、拖拽、节流、防抖、长按…）
-- 使用 Prettier 统一格式化代码，集成 Eslint、Stylelint 代码校验规范
-- 使用 husky、lint-staged、commitlint、czg、cz-git 规范提交信息
+<p align="center">
+    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview1.png">
+    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview2.png">
+    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview3.png">
+</p>
 
-### 安装使用步骤 📔
+### Use Gitpod
 
-- **Clone：**
+Open the project in Gitpod (free online dev environment for GitHub) and start coding immediately.
 
-```text
-# Gitee
-git clone https://gitee.com/laramie/Geeker-Admin.git
-# GitHub
-git clone https://github.com/HalseySpicy/Geeker-Admin.git
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/anncwb/vue-vben-admin)
+
+## Documentation
+
+[Document](https://doc.vvbin.cn/)
+
+## Preparation
+
+- [node](http://nodejs.org/) and [git](https://git-scm.com/) - Project development environment
+- [Vite](https://vitejs.dev/) - Familiar with vite features
+- [Vue3](https://v3.vuejs.org/) - Familiar with Vue basic syntax
+- [TypeScript](https://www.typescriptlang.org/) - Familiar with the basic syntax of `TypeScript`
+- [Es6+](http://es6.ruanyifeng.com/) - Familiar with es6 basic syntax
+- [Vue-Router-Next](https://next.router.vuejs.org/) - Familiar with the basic use of vue-router
+- [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/) - ui basic use
+- [Mock.js](https://github.com/nuysoft/Mock) - mockjs basic syntax
+
+## Install and use
+
+- Get the project code
+
+```bash
+git clone https://github.com/anncwb/vue-vben-admin.git
 ```
 
-- **Install：**
+- Installation dependencies
 
-```text
+```bash
+cd vue-vben-admin
+
 pnpm install
+
 ```
 
-- **Run：**
+- run
 
-```text
-pnpm dev
+```bash
 pnpm serve
 ```
 
-- **Build：**
+- build
 
-```text
-# 开发环境
-pnpm build:dev
-
-# 测试环境
-pnpm build:test
-
-# 生产环境
-pnpm build:pro
+```bash
+pnpm build
 ```
 
-- **Lint：**
+## Change Log
 
-```text
-# eslint 检测代码
-pnpm lint:eslint
+[CHANGELOG](./CHANGELOG.zh_CN.md)
 
-# prettier 格式化代码
-pnpm lint:prettier
+## Project
 
-# stylelint 格式化样式
-pnpm lint:stylelint
-```
+- [vue-vben-admin](https://github.com/anncwb/vue-vben-admin) - full version
+- [vue-vben-admin-thin-next](https://github.com/anncwb/vben-admin-thin-next) - Simplified version
 
-- **commit：**
+## How to contribute
 
-```text
-# 提交代码（提交前会自动执行 lint:lint-staged 命令）
-pnpm commit
-```
+You are very welcome to join！[Raise an issue](https://github.com/anncwb/vue-vben-admin/issues/new/choose) Or submit a Pull Request。
 
-### 项目截图 📷
+**Pull Request:**
 
-- 登录页：
+1. Fork code!
+2. Create your own branch: `git checkout -b feat/xxxx`
+3. Submit your changes: `git commit -am 'feat(function): add xxxxx'`
+4. Push your branch: `git push origin feat/xxxx`
+5. submit`pull request`
 
-![login_light](https://i.imgtg.com/2023/04/13/8tknp.png)
+## Git Contribution submission specification
 
-![login_dark](https://i.imgtg.com/2023/04/13/8tmpP.png)
+- reference [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) specification ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
 
-- 首页：
+  - `feat` Add new features
+  - `fix` Fix the problem/BUG
+  - `style` The code style is related and does not affect the running result
+  - `perf` Optimization/performance improvement
+  - `refactor` Refactor
+  - `revert` Undo edit
+  - `test` Test related
+  - `docs` Documentation/notes
+  - `chore` Dependency update/scaffolding configuration modification etc.
+  - `workflow` Workflow improvements
+  - `ci` Continuous integration
+  - `types` Type definition file changes
+  - `wip` In development
 
-![home_light](https://i.imgtg.com/2023/04/13/8tl1j.png)
+## Related warehouse
 
-![home_dark](https://i.imgtg.com/2023/04/13/8tpfb.png)
+If these plugins are helpful to you, you can give a star support
 
-- 表格页：
+- [vite-plugin-mock](https://github.com/anncwb/vite-plugin-mock) - Used for local and development environment data mock
+- [vite-plugin-html](https://github.com/anncwb/vite-plugin-html) - Used for html template conversion and compression
+- [vite-plugin-compression](https://github.com/anncwb/vite-plugin-compression) - Used to pack input .gz|.brotil files
+- [vite-plugin-svg-icons](https://github.com/anncwb/vite-plugin-svg-icons) - Used to quickly generate svg sprite
 
-![table_light](https://i.imgtg.com/2023/04/13/8tfMx.png)
+## Browser support
 
-![table_dark](https://i.imgtg.com/2023/04/13/8tv8F.png)
+The `Chrome 80+` browser is recommended for local development
 
-- 数据可视化
+Support modern browsers, not IE
 
-![dashboard](https://i.imgtg.com/2023/04/14/82Grx.png)
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| :-: | :-: | :-: | :-: | :-: |
+| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
 
-- 数据大屏：
+## Maintainer
 
-![dataScreen](https://i.imgtg.com/2023/01/16/QP8HF.png)
+[@Vben](https://github.com/anncwb)
 
-### 文件资源目录 📚
+## Donate
 
-```text
-Geeker-Admin
-├─ .husky                 # husky 配置文件
-├─ .vscode                # VSCode 推荐配置
-├─ build                  # Vite 配置项
-├─ public                 # 静态资源文件（该文件夹不会被打包）
-├─ src
-│  ├─ api                 # API 接口管理
-│  ├─ assets              # 静态资源文件
-│  ├─ components          # 全局组件
-│  ├─ config              # 全局配置项
-│  ├─ directives          # 全局指令文件
-│  ├─ enums               # 项目常用枚举
-│  ├─ hooks               # 常用 Hooks 封装
-│  ├─ languages           # 语言国际化 i18n
-│  ├─ layouts             # 框架布局模块
-│  ├─ routers             # 路由管理
-│  ├─ stores              # pinia store
-│  ├─ styles              # 全局样式文件
-│  ├─ typings             # 全局 ts 声明
-│  ├─ utils               # 常用工具库
-│  ├─ views               # 项目所有页面
-│  ├─ App.vue             # 项目主组件
-│  ├─ main.ts             # 项目入口文件
-│  └─ vite-env.d.ts       # 指定 ts 识别 vue
-├─ .editorconfig          # 统一不同编辑器的编码风格
-├─ .env                   # vite 常用配置
-├─ .env.development       # 开发环境配置
-├─ .env.production        # 生产环境配置
-├─ .env.test              # 测试环境配置
-├─ .eslintignore          # 忽略 Eslint 校验
-├─ .eslintrc.cjs          # Eslint 校验配置文件
-├─ .gitignore             # 忽略 git 提交
-├─ .prettierignore        # 忽略 Prettier 格式化
-├─ .prettierrc.cjs        # Prettier 格式化配置
-├─ .stylelintignore       # 忽略 stylelint 格式化
-├─ .stylelintrc.cjs       # stylelint 样式格式化配置
-├─ CHANGELOG.md           # 项目更新日志
-├─ commitlint.config.cjs  # git 提交规范配置
-├─ index.html             # 入口 html
-├─ LICENSE                # 开源协议文件
-├─ lint-staged.config.cjs # lint-staged 配置文件
-├─ package-lock.json      # 依赖包包版本锁
-├─ package.json           # 依赖包管理
-├─ postcss.config.cjs     # postcss 配置
-├─ README.md              # README 介绍
-├─ tsconfig.json          # typescript 全局配置
-└─ vite.config.ts         # vite 全局配置文件
-```
+If you think this project is helpful to you, you can help the author buy a cup of coffee to show your support!
 
-### 浏览器支持 🌎
+![donate](https://anncwb.github.io/anncwb/images/sponsor.png)
 
-- 本地开发推荐使用 Chrome 最新版浏览器 [Download](https://www.google.com/intl/zh-CN/chrome/)。
-- 生产环境支持现代浏览器，不在支持 IE 浏览器，更多浏览器可以查看 [Can I Use Es Module](https://caniuse.com/?search=ESModule)。
+<a style="display: block;width: 100px;height: 50px;line-height: 50px; color: #fff;text-align: center; background: #408aed;border-radius: 4px;" href="https://www.paypal.com/paypalme/cvvben">Paypal Me</a>
 
-| ![IE](https://i.imgtg.com/2023/04/11/8z7ot.png) | ![Edge](https://i.imgtg.com/2023/04/11/8zr3p.png) | ![Firefox](https://i.imgtg.com/2023/04/11/8zKiU.png) | ![Chrome](https://i.imgtg.com/2023/04/11/8zNrx.png) | ![Safari](https://i.imgtg.com/2023/04/11/8zeGj.png) |
-| :---------------------------------------------: | :-----------------------------------------------: | :--------------------------------------------------: | :-------------------------------------------------: | :-------------------------------------------------: |
-|                   not support                   |                  last 2 versions                  |                   last 2 versions                    |                   last 2 versions                   |                   last 2 versions                   |
+## Discord
 
-### 项目后台接口 🧩
+- [github discussions](https://github.com/anncwb/vue-vben-admin/discussions)
+- [Discord](https://discord.gg/8GuAdwDhj6)
 
-项目后台接口完全采用 Mock 数据，感谢以下 Mock 平台支持：
+## License
 
-- FastMock： https://www.fastmock.site
-- EasyMock：https://mock.mengxuegu.com
-
-### 微信交流群 👨‍👨‍👦‍👦
-
-微信一群、二群已满，三群已超过 200 人，需要加微信好友，拉大家进群 🤪
-
-|                           微信二维码                           |
-| :------------------------------------------------------------: |
-| <img src="https://i.imgtg.com/2023/01/16/QRbJL.png" width=170> |
-
-### 捐赠 🍵
-
-如果你正在使用这个项目或者喜欢这个项目的，可以通过以下方式支持我：
-
-- Star、Fork、Watch 一键三连 🚀
-- 通过微信、支付宝一次性捐款 ❤
-
-|                                        微信                                        |                                       支付宝                                       |
-| :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| <img src="https://i.imgtg.com/2023/01/16/QRzBX.png" alt="Alipay QRcode" width=170> | <img src="https://i.imgtg.com/2023/01/16/QRFZt.png" alt="Wechat QRcode" width=170> |
+[MIT © Vben-2020](./LICENSE)

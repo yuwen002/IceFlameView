@@ -1,45 +1,64 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-// reset style sheet
-import "@/styles/reset.scss";
-// CSS common style sheet
-import "@/styles/common.scss";
-// iconfont css
-import "@/assets/iconfont/iconfont.scss";
-// font css
-import "@/assets/fonts/font.scss";
-// element css
-import "element-plus/dist/index.css";
-// element dark css
-import "element-plus/theme-chalk/dark/css-vars.css";
-// custom element dark css
-import "@/styles/theme/element-dark.scss";
-// custom element css
-import "@/styles/element.scss";
-// svg icons
-import "virtual:svg-icons-register";
-// element plus
-import ElementPlus from "element-plus";
-// element icons
-import * as Icons from "@element-plus/icons-vue";
-// custom directives
-import directives from "@/directives/index";
-// vue Router
-import router from "@/routers";
-// vue i18n
-import I18n from "@/languages/index";
-// pinia store
-import pinia from "@/stores";
-// errorHandler
-import errorHandler from "@/utils/errorHandler";
+import 'uno.css';
+import '@/design/index.less';
+import '@/components/VxeTable/src/css/index.scss';
+import 'ant-design-vue/dist/antd.less';
+// Register icon sprite
+import 'virtual:svg-icons-register';
 
-const app = createApp(App);
+import { createApp } from 'vue';
 
-app.config.errorHandler = errorHandler;
+import { registerGlobComp } from '@/components/registerGlobComp';
+import { setupGlobDirectives } from '@/directives';
+import { setupI18n } from '@/locales/setupI18n';
+import { setupErrorHandle } from '@/logics/error-handle';
+import { initAppConfigStore } from '@/logics/initAppConfig';
+import { router, setupRouter } from '@/router';
+import { setupRouterGuard } from '@/router/guard';
+import { setupStore } from '@/store';
 
-// register the element Icons component
-Object.keys(Icons).forEach(key => {
-  app.component(key, Icons[key as keyof typeof Icons]);
-});
+import App from './App.vue';
 
-app.use(ElementPlus).use(directives).use(router).use(I18n).use(pinia).mount("#app");
+async function bootstrap() {
+  const app = createApp(App);
+
+  // Configure store
+  // 配置 store
+  setupStore(app);
+
+  // Initialize internal system configuration
+  // 初始化内部系统配置
+  initAppConfigStore();
+
+  // Register global components
+  // 注册全局组件
+  registerGlobComp(app);
+
+  // Multilingual configuration
+  // 多语言配置
+  // Asynchronous case: language files may be obtained from the server side
+  // 异步案例：语言文件可能从服务器端获取
+  await setupI18n(app);
+
+  // Configure routing
+  // 配置路由
+  setupRouter(app);
+
+  // router-guard
+  // 路由守卫
+  setupRouterGuard(router);
+
+  // Register global directive
+  // 注册全局指令
+  setupGlobDirectives(app);
+
+  // Configure global error handling
+  // 配置全局错误处理
+  setupErrorHandle(app);
+
+  // https://next.router.vuejs.org/api/#isready
+  // await router.isReady();
+
+  app.mount('#app');
+}
+
+bootstrap();

@@ -1,9 +1,10 @@
-/dist/*
+dist
 .local
-/node_modules/**
+.output.js
+node_modules
 
 **/*.svg
 **/*.sh
 
-/public/*
-stats.html
+public
+.npmrc

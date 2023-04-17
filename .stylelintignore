@@ -1,4 +1,2 @@
-/dist/*
-/public/*
-public/*
-stats.html
+dist
+public
