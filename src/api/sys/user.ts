@@ -15,7 +15,8 @@ enum Api {
  * @description: user login api
  */
 export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-  return defHttp.post<LoginResultModel>(
+  alert('aaaaaaaaaaaaaaa');
+  const aaaaa = defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
       params,
@@ -24,6 +25,8 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
       errorMessageMode: mode,
     },
   );
+  console.log(aaaaa);
+  return 'aaaaaaaaaaaa';
 }
 
 /**
