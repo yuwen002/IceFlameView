@@ -1,5 +1,5 @@
 {
-  "name": "vben-admin",
+  "name": "ice-flame",
   "version": "2.10.0",
   "homepage": "https://github.com/vbenjs/vue-vben-admin",
   "bugs": {
@@ -11,8 +11,8 @@
   },
   "license": "MIT",
   "author": {
-    "name": "vben",
-    "email": "anncwb@126.com",
+    "name": "ice-flame",
+    "email": "yuwen002@163.com",
     "url": "https://github.com/anncwb"
   },
   "scripts": {
