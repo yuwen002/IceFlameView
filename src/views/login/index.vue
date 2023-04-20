@@ -1,6 +1,6 @@
 <!--
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Date: 2021-04-20 11:06:21
  * @LastEditors: huzhushan@126.com
  * @LastEditTime: 2022-09-27 18:24:27
@@ -12,7 +12,7 @@
 <template>
   <div class="login">
     <el-form class="form" :model="model" :rules="rules" ref="loginForm">
-      <h1 class="title">Vue3 Element Admin</h1>
+      <h1 class="title">Ice Flame</h1>
       <el-form-item prop="userName">
         <el-input
           class="text"
@@ -101,7 +101,7 @@ export default defineComponent({
     })
     const state = reactive({
       model: {
-        userName: 'admin',
+        userName: '15566036902',
         password: '123456',
       },
       rules: getRules(),
