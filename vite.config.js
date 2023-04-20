@@ -76,10 +76,10 @@ export default env => {
       port: 3001,
       open: true,
       proxy: {
-        '/api': {
-          target: 'http://dev.api.xxx.com', // 后端接口的域名
+        '/manage': {
+          target: process.env.VUE_APP_BASE_API, // 后端接口的域名
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, ''),
+          rewrite: path => path.replace(/^\/manage/, ''),
         },
       },
     },
