@@ -14,7 +14,7 @@ import request from '@/utils/request'
 // 登录接口
 export const Login = data => {
   return request({
-    url: '/api/login',
+    url: '/master/login_username_password',
     method: 'post',
     data,
   })
