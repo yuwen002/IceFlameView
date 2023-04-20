@@ -1,53 +1,87 @@
-import Vue from 'vue'
+/*
+ *                        _oo0oo_
+ *                       o8888888o
+ *                       88" . "88
+ *                       (| -_- |)
+ *                       0\  =  /0
+ *                     ___/`---'\___
+ *                   .' \\|     |// '.
+ *                  / \\|||  :  |||// \
+ *                 / _||||| -:- |||||- \
+ *                |   | \\\  - /// |   |
+ *                | \_|  ''\---/''  |_/ |
+ *                \  .-\__  '-'  ___/-. /
+ *              ___'. .'  /--.--\  `. .'___
+ *           ."" '<  `.___\_<|>_/___.' >' "".
+ *          | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+ *          \  \ `_.   \_ __\ /__ _/   .-` /  /
+ *      =====`-.____`.___ \_____/___.-`___.-'=====
+ *                        `=---='
+ *
+ *
+ *      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *
+ *            佛祖保佑       永不宕机     永无BUG
+ *
+ * @Descripttion:
+ * @version:
+ * @Date: 2021-04-20 11:06:21
+ * @LastEditors: huzhushan@126.com
+ * @LastEditTime: 2022-09-27 19:04:15
+ * @Author: huzhushan@126.com
+ * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
+ * @Github: https://github.com/huzhushan/vue3-element-admin
+ * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
+ */
 
-import Cookies from 'js-cookie'
+import { createApp } from 'vue'
+import App from './App.vue'
 
-import 'normalize.css/normalize.css' // a modern alternative to CSS resets
+const app = createApp(App)
 
-import Element from 'element-ui'
-import './styles/element-variables.scss'
-import enLang from 'element-ui/lib/locale/lang/en'// 如果使用中文语言包请默认支持，无需额外引入，请删除该依赖
+// 引入element-plus
+import ElementPlus from 'element-plus'
+import './assets/style/element-variables.scss'
 
-import '@/styles/index.scss' // global css
+// 国际化
+import i18n from '@/i18n'
 
-import App from './App'
-import store from './store'
+// 全局注册element-plus/icons-vue
+import * as ICONS from '@element-plus/icons-vue'
+Object.entries(ICONS).forEach(([key, component]) => {
+  // app.component(key === 'PieChart' ? 'PieChartIcon' : key, component)
+  app.component(key, component)
+})
+
+// 引入路由
 import router from './router'
 
-import './icons' // icon
-import './permission' // permission control
-import './utils/error-log' // error log
+// 引入pinia
+import pinia from './pinia'
 
-import * as filters from './filters' // global filters
+// 权限控制
+import './permission'
 
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online ! ! !
- */
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+// 引入svg图标注册脚本
+import 'vite-plugin-svg-icons/register'
 
-Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
-  locale: enLang // 如果使用中文，无需设置，请删除
+// 注册全局组件
+import * as Components from './global-components'
+Object.entries(Components).forEach(([key, component]) => {
+  app.component(key, component)
 })
 
-// register global utility filters
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-})
+// 注册自定义指令
+import * as Directives from '@/directive'
+Object.values(Directives).forEach(fn => fn(app))
 
-Vue.config.productionTip = false
+// 错误日志
+import useErrorHandler from './error-log'
+useErrorHandler(app)
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+app
+  .use(i18n)
+  .use(ElementPlus)
+  .use(pinia)
+  .use(router)
+  .mount('#app')
