@@ -35,7 +35,7 @@ import router from '@/router'
 import { useApp } from '@/pinia/modules/app'
 
 const service = axios.create({
-  baseURL: '/',
+  baseURL: 'http://127.0.0.1:8000/manage',
   timeout: 10000,
   withCredentials: true,
 })

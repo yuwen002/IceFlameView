@@ -77,7 +77,7 @@ export default env => {
       open: true,
       proxy: {
         '/manage': {
-          target: process.env.VUE_APP_BASE_API, // 后端接口的域名
+          target: "http://127.0.0.1:8000/manage", // 后端接口的域名
           changeOrigin: true,
           rewrite: path => path.replace(/^\/manage/, ''),
         },
