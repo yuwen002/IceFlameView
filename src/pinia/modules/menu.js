@@ -84,7 +84,7 @@ export const useMenus = defineStore('menu', () => {
     // 从后台获取菜单
     const { code, data } = await GetMenus()
 
-    if (+code === 200) {
+    if (+code === 0) {
       // 添加路由之前先删除所有动态路由
       asyncRoutes.forEach(item => {
         router.removeRoute(item.name)
