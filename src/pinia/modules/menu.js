@@ -27,20 +27,24 @@ export const useMenus = defineStore('menu', () => {
   const getFilterRoutes = (targetRoutes, ajaxRoutes) => {
     const filterRoutes = []
 
-    ajaxRoutes.forEach(item => {
-      const target = targetRoutes.find(target => target.name === item.name)
+    Object.entries(ajaxRoutes).forEach(value => {
+      if (Array.isArray(value.list)) {
+        value.list.forEach(item => {
+          const target = targetRoutes.find(target => target.name === item.name)
 
-      if (target) {
-        const { children: targetChildren, ...rest } = target
-        const route = {
-          ...rest,
-        }
+          if (target) {
+            const { children: targetChildren, ...rest } = target
+            const route = {
+              ...rest,
+            }
 
-        if (item.children) {
-          route.children = getFilterRoutes(targetChildren, item.children)
-        }
+            if (item.children) {
+              route.children = getFilterRoutes(targetChildren, item.children)
+            }
 
-        filterRoutes.push(route)
+            filterRoutes.push(route)
+          }
+        })
       }
     })
 
@@ -89,6 +93,7 @@ export const useMenus = defineStore('menu', () => {
       asyncRoutes.forEach(item => {
         router.removeRoute(item.name)
       })
+
       // 过滤出需要添加的动态路由
       const filterRoutes = getFilterRoutes(asyncRoutes, data)
       filterRoutes.forEach(route => router.addRoute(route))

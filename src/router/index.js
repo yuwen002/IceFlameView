@@ -32,13 +32,14 @@ import error from './modules/error'
 import login from './modules/login'
 import lock from './modules/lock'
 import home from './modules/home'
+import systemPermissions from "@/router/modules/systemPermissions";
 import test from './modules/test'
 
 /* 菜单栏的路由 */
 // 固定菜单
 export const fixedRoutes = [...home]
 // 动态菜单
-export const asyncRoutes = [...test]
+export const asyncRoutes = [systemPermissions]
 
 const router = createRouter({
   history: createWebHashHistory(),
