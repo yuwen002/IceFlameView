@@ -28,6 +28,8 @@ export const useAccount = defineStore('account', {
       if (+code === 0) {
         this.userinfo = data
         return Promise.resolve(data)
+      } else {
+        return code
       }
     },
   },

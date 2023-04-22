@@ -15,20 +15,29 @@ const Home = () => import('@/views/home/index.vue')
 
 export default [
   {
-    path: '/home',
+    path: '/',
     component: Layout,
-    name: 'Dashboard',
+    name: '中台',
     meta: {
-      title: 'menu.dashboard',
+      title: '中台',
     },
     icon: 'icon-home',
     children: [
       {
         path: '',
-        name: 'home',
+        name: '111',
         component: Home,
         meta: {
-          title: 'menu.homepage',
+          title: '111',
+          affix: true,
+        },
+      },
+      {
+        path: '',
+        name: '222',
+        component: Home,
+        meta: {
+          title: '222',
           affix: true,
         },
       },

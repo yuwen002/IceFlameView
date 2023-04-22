@@ -80,7 +80,16 @@ router.beforeEach(async to => {
     if (!userinfo) {
       try {
         // 获取用户信息
-        await getUserinfo()
+        const code = await getUserinfo()
+        if (code == -1) {
+          return {
+            name: 'login',
+            query: {
+              redirect: to.fullPath, // redirect是指登录之后可以跳回到redirect指定的页面
+            },
+            replace: true,
+          }
+        }
       } catch (err) {
         loadingInstance.close()
         return false
