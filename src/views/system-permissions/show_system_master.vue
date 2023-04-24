@@ -1,13 +1,11 @@
 <template>
-aaaaaaaaaa
+  aaaaaaaaaa
 </template>
 
 <script>
 export default {
-  name: "show_system_master"
-};
+  name: 'show_system_master',
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -32,7 +32,7 @@ import error from './modules/error'
 import login from './modules/login'
 import lock from './modules/lock'
 import home from './modules/home'
-import systemPermissions from "@/router/modules/system-permissions";
+import systemPermissions from '@/router/modules/system-permissions'
 import test from './modules/test'
 
 /* 菜单栏的路由 */
