@@ -32,15 +32,6 @@ export default [
           affix: true,
         },
       },
-      {
-        path: '',
-        name: '222',
-        component: Home,
-        meta: {
-          title: '222',
-          affix: true,
-        },
-      },
     ],
   },
 ]

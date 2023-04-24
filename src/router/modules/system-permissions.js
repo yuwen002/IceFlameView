@@ -1,5 +1,7 @@
 const Layout = () => import('@/layout/index.vue')
 
+const SystemMasterList = () => import("@/views/system-permissions/show_system_master.vue");
+
 export default [
   {
     path: '',
@@ -36,9 +38,9 @@ export default [
         },
       },
       {
-        path: "",
+        path: "/master/list",
         name: "管理员用户列表",
-        component: '',
+        component: SystemMasterList,
         meta: {
           title: "管理员用户列表",
         },
