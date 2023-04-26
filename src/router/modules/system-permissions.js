@@ -1,9 +1,7 @@
 const Layout = () => import('@/layout/index.vue')
 
-const SystemMasterList = () =>
-  import('@/views/system-permissions/show_system_master.vue')
-const SystemMasterAdd = () =>
-  import('@/views/system-permissions/add_system_master.vue')
+const SystemMasterList = () => import('@/views/system-permissions/show_system_master.vue')
+const SystemMasterAdd = () => import('@/views/system-permissions/add_system_master.vue')
 
 export default [
   {
@@ -24,9 +22,9 @@ export default [
         },
       },
       {
-        path: '/master/list',
+        path: '/master/add',
         name: '新建管理员用户',
-        component: SystemMasterList,
+        component: SystemMasterAdd,
         meta: {
           title: '新建管理员用户',
         },
