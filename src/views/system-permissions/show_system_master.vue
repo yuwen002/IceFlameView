@@ -1,5 +1,17 @@
 <template>
   <pro-table title="列表" :request="getList" :columns="columns">
+    <!-- 工具栏 -->
+    <template #toolbar>
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        @click="$router.push({ name: 'userAdd' })"
+      >创建账号
+      </el-button>
+      <el-button type="danger" icon="el-icon-refresh" @click="refresh">刷新</el-button>
+      <el-button type="danger"  icon="el-icon-refresh" size="small">重置</el-button>
+    </template>
+
     <template #operate="scope">
       <el-button size="mini" type="primary">编辑</el-button>
       <el-button size="mini" type="danger">删除</el-button>
@@ -9,18 +21,19 @@
 
 <script>
 import { defineComponent, reactive, ref, toRefs } from "vue";
-import { ShowSystemMaster } from '@/api/system-permissions'
+import { ShowSystemMaster } from "@/api/system-permissions";
+
 export default defineComponent({
   setup() {
     const state = reactive({
       params: {
-        page: '',
-        size: '',
+        page: "",
+        size: ""
       },
       // 表格列配置，大部分属性跟el-table-column配置一样
       columns: [
         { label: "序号", type: "index" },
-        { label: "ID", prop: "account_id"},
+        { label: "ID", prop: "account_id" },
         { label: "用户名", prop: "username" },
         { label: "姓名", prop: "name" },
         { label: "电话", prop: "tel" },
@@ -29,9 +42,9 @@ export default defineComponent({
           fixed: "right",
           width: 180,
           align: "center",
-          tdSlot: "operate", // 自定义单元格内容的插槽名称
-        },
-      ],
+          tdSlot: "operate" // 自定义单元格内容的插槽名称
+        }
+      ]
     });
 
     // 请求函数
@@ -42,14 +55,14 @@ export default defineComponent({
       // 必须要返回一个对象，包含data数组和total总数
       return {
         data: data.list,
-        total: +data.total,
+        total: +data.total
       };
     };
 
     return {
       ...toRefs(state),
-      getList,
+      getList
     };
-  },
+  }
 });
 </script>
