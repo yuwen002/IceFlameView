@@ -1,15 +1,12 @@
 <template>
-  <pro-table title="列表" :request="getList" :columns="columns">
+  <pro-table ref="proTable" title="列表" :request="getList" :columns="columns">
     <!-- 工具栏 -->
     <template #toolbar>
-      <el-button
-        type="primary"
-        icon="el-icon-plus"
-        @click="$router.push({ name: 'userAdd' })"
-      >创建账号
+      <el-button type="primary" @click="$router.push({ name: 'userAdd' })">
+        <el-icon><Plus /></el-icon>&nbsp;创建账号
       </el-button>
-      <el-button type="danger" icon="el-icon-refresh" @click="refresh">刷新</el-button>
-      <el-button type="danger"  icon="el-icon-refresh" size="small">重置</el-button>
+      <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
+      <el-button type="primary" icon="el-icon-search">搜索</el-button>
     </template>
 
     <template #operate="scope">
@@ -27,8 +24,8 @@ export default defineComponent({
   setup() {
     const state = reactive({
       params: {
-        page: "",
-        size: ""
+        page: "1",
+        size: "10"
       },
       // 表格列配置，大部分属性跟el-table-column配置一样
       columns: [
@@ -59,9 +56,18 @@ export default defineComponent({
       };
     };
 
+
+    const proTable = ref(null);
+    // 刷新
+    const refresh = () => {
+      proTable.value.refresh();
+    };
+
     return {
       ...toRefs(state),
-      getList
+      proTable,
+      getList,
+      refresh
     };
   }
 });
