@@ -2,7 +2,7 @@
   <pro-table ref="proTable" title="列表" :request="getList" :columns="columns">
     <!-- 工具栏 -->
     <template #toolbar>
-      <el-button type="primary" @click="$router.push({ name: 'userAdd' })">
+      <el-button type="primary" @click="$router.push({ name: 'add_system_master' })">
         <el-icon><Plus /></el-icon>&nbsp;创建账号
       </el-button>
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
@@ -21,6 +21,7 @@ import { defineComponent, reactive, ref, toRefs } from "vue";
 import { ShowSystemMaster } from "@/api/system-permissions";
 
 export default defineComponent({
+  name: 'systemMasterList',
   setup() {
     const state = reactive({
       params: {
