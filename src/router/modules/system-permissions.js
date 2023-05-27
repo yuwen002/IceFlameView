@@ -1,13 +1,16 @@
 const Layout = () => import('@/layout/index.vue')
 
-const SystemMasterList = () => import('@/views/system-permissions/show_system_master.vue')
-const SystemMasterAdd = () => import('@/views/system-permissions/add_system_master.vue')
+const SystemMasterList = () =>
+  import('@/views/system-permissions/show_system_master.vue')
+const SystemMasterAdd = () =>
+  import('@/views/system-permissions/add_system_master.vue')
 
 export default [
   {
     path: '',
     component: Layout,
-    name: '权限管理',
+    name: 'systemManagement',
+    cn_name: '权限管理',
     meta: {
       title: '系统管理',
     },
@@ -15,7 +18,8 @@ export default [
     children: [
       {
         path: '/master/list',
-        name: '管理员用户列表',
+        name: 'systemMasterList',
+        cn_name: '管理员用户列表',
         component: SystemMasterList,
         meta: {
           title: '管理员用户列表',
@@ -23,7 +27,8 @@ export default [
       },
       {
         path: '/master/add',
-        name: '新建管理员用户',
+        name: 'systemMasterAdd',
+        cn_name: '新建管理员用户',
         component: SystemMasterAdd,
         meta: {
           title: '新建管理员用户',

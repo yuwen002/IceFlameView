@@ -28,7 +28,7 @@ export const useMenus = defineStore('menu', () => {
     const filterRoutes = []
 
     ajaxRoutes.forEach(item => {
-      const target = targetRoutes.find(target => target.name === item.name)
+      const target = targetRoutes.find(target => target.cn_name === item.name)
 
       if (target) {
         const { children: targetChildren, ...rest } = target
