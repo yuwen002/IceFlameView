@@ -20,6 +20,14 @@ export const Login = data => {
   })
 }
 
+export const Register = data => {
+  return request({
+    url: '/master/register',
+    method: 'post',
+    data,
+  })
+}
+
 // 获取登录用户信息
 export const GetUserinfo = () => {
   return request({

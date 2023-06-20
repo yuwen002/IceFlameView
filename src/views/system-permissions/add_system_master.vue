@@ -115,6 +115,7 @@ export default defineComponent({
                 message: message,
                 duration: 1000,
               })
+              state.addForm.resetFields()
             } else {
               ctx.$message.error(message)
             }

@@ -51,7 +51,7 @@ const getPageTitle = title => {
 }
 
 // 白名单，里面是路由对象的name
-const WhiteList = ['login', 'lock']
+const WhiteList = ['login', 'register', 'lock']
 
 let loadingInstance = null
 

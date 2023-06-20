@@ -1,24 +1,58 @@
 <template>
-  <pro-table ref="proTable" title="列表" :request="getList" :columns="columns">
+  <pro-table
+    ref="proTable"
+    title="列表"
+    :request="getList"
+    :columns="columns"
+
+  >
+    <!--
+    :pagination="{ pageSize: state.params.size, current: +state.params.page, showSizeChanger: true }"
+    -->
     <!-- 工具栏 -->
     <template #toolbar>
       <el-button type="primary" @click="$router.push({ name: 'systemMasterAdd' })">
         <el-icon><Plus /></el-icon>&nbsp;创建账号
       </el-button>
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
     </template>
 
+    <!-- 操作列 -->
     <template #operate="scope">
-      <el-button size="mini" type="primary">编辑</el-button>
+      <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
       <el-button size="mini" type="danger">删除</el-button>
     </template>
   </pro-table>
+
+  <!-- 编辑表单对话框 -->
+  <!-- 编辑表单对话框 -->
+  <el-dialog title="编辑账号" v-model="dialogVisible">
+    <el-form ref="editForm" :model="currentData" label-width="90px">
+      <el-form-item label="ID">
+        <el-input v-model="currentData.account_id" disabled />
+      </el-form-item>
+      <el-form-item label="用户名">
+        <el-input v-model="currentData.username" />
+      </el-form-item>
+      <el-form-item label="姓名">
+        <el-input v-model="currentData.name" />
+      </el-form-item>
+      <el-form-item label="电话">
+        <el-input v-model="currentData.tel" />
+      </el-form-item>
+    </el-form>
+
+    <template #footer>
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="handleSubmit">确 定</el-button>
+    </template>
+
+  </el-dialog>
 </template>
 
 <script>
-import { defineComponent, reactive, ref, toRefs } from "vue";
-import { ShowSystemMaster } from "@/api/system-permissions";
+import { defineComponent, reactive, ref, toRefs } from "vue"
+import { ShowSystemMaster } from "@/api/system-permissions"
 
 export default defineComponent({
   name: 'systemMasterList',
@@ -42,34 +76,53 @@ export default defineComponent({
           align: "center",
           tdSlot: "operate" // 自定义单元格内容的插槽名称
         }
-      ]
-    });
+      ],
+      dialogVisible: false,
+      currentData: {}
+    })
 
     // 请求函数
     const getList = async (params) => {
       // params是从组件接收的，包含分页和搜索字段。
-      const { code, data, message } = await ShowSystemMaster(state.params);
+      const { code, data, message } = await ShowSystemMaster(state.params)
 
       // 必须要返回一个对象，包含data数组和total总数
       return {
         data: data.list,
         total: +data.total
-      };
-    };
+      }
+    }
 
-
-    const proTable = ref(null);
+    const proTable = ref(null)
     // 刷新
     const refresh = () => {
-      proTable.value.refresh();
-    };
+      proTable.value.refresh()
+    }
+
+    // 打开编辑表单对话框
+    const handleEdit = (row) => {
+      state.currentData = { ...row } // 这里需要深拷贝一份，防止修改数据时影响列表中的数据
+      state.dialogVisible = true
+    }
+
+    // 提交修改
+    const handleSubmit = async () => {
+      try {
+        // await UpdateSystemMaster(state.currentData)
+        proTable.value.reload() // 重新加载表格数据
+        state.dialogVisible = false // 隐藏表单对话框
+      } catch (error) {
+        console.error(error)
+      }
+    }
 
     return {
       ...toRefs(state),
       proTable,
       getList,
-      refresh
-    };
+      refresh,
+      handleEdit,
+    }
   }
-});
+})
 </script>

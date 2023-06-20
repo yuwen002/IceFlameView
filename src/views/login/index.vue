@@ -1,14 +1,3 @@
-<!--
- * @Descripttion:
- * @version:
- * @Date: 2021-04-20 11:06:21
- * @LastEditors: huzhushan@126.com
- * @LastEditTime: 2022-09-27 18:24:27
- * @Author: huzhushan@126.com
- * @HomePage: https://huzhushan.gitee.io/vue3-element-admin
- * @Github: https://github.com/huzhushan/vue3-element-admin
- * @Donate: https://huzhushan.gitee.io/vue3-element-admin/donate/
--->
 <template>
   <div class="login">
     <el-form class="form" :model="model" :rules="rules" ref="loginForm">
@@ -33,15 +22,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button
-          :loading="loading"
-          type="primary"
-          class="btn"
-          size="large"
-          @click="submit"
-        >
-          {{ btnText }}
-        </el-button>
+        <el-button type="primary" class="btn login-btn" size="large" @click="submit">{{ btnText }}</el-button>
+        <el-button type="info" class="btn register-btn" size="large" @click="toRegister">注册</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -56,7 +38,6 @@ import {
   getCurrentInstance,
   reactive,
   toRefs,
-  ref,
   computed,
   watch,
 } from 'vue'
@@ -109,7 +90,7 @@ export default defineComponent({
       btnText: computed(() =>
         state.loading ? ctx.$t('login.logining') : ctx.$t('login.login')
       ),
-      loginForm: ref(null),
+      loginForm: null,
       submit: () => {
         if (state.loading) {
           return
@@ -142,6 +123,9 @@ export default defineComponent({
           }
         })
       },
+      toRegister: () => {
+        router.push('/register')
+      }
     })
 
     return {
@@ -197,7 +181,13 @@ export default defineComponent({
       }
     }
     .btn {
-      width: 100%;
+      width: 45%;
+    }
+    .login-btn {
+      margin-right: 15px;
+    }
+    .register-btn {
+      margin-left: 10px; /* 调整注册按钮左侧的间距 */
     }
   }
 }

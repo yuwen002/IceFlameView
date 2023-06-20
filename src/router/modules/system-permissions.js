@@ -5,6 +5,8 @@ const SystemMasterList = () =>
 const SystemMasterAdd = () =>
   import('@/views/system-permissions/add_system_master.vue')
 
+const SystemMasterEdit = () => import('@/views/system-permissions/edit_system_master.vue')
+
 export default [
   {
     path: '',
@@ -34,6 +36,16 @@ export default [
           title: '新建管理员用户',
         },
         // hidden: true,
+      },
+      {
+        path: '/master/edit',
+        name: 'systemMasterEdit',
+        cn_name: '编辑管理员用户',
+        component: SystemMasterEdit,
+        meta: {
+          title: '编辑管理员用户'
+        },
+        hidden: true,
       },
     ],
   },
