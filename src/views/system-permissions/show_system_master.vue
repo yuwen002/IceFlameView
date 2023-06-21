@@ -4,17 +4,17 @@
     title="列表"
     :request="getList"
     :columns="columns"
-
   >
-    <!--
-    :pagination="{ pageSize: state.params.size, current: +state.params.page, showSizeChanger: true }"
-    -->
     <!-- 工具栏 -->
     <template #toolbar>
       <el-button type="primary" @click="$router.push({ name: 'systemMasterAdd' })">
         <el-icon><Plus /></el-icon>&nbsp;创建账号
       </el-button>
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
+    </template>
+
+    <template v-slot:status="{ record }">
+      <span :style="{ color: record.status === 1 ? 'red' : 'yellow' }">{{ record.status === 1 ? '冻结' : '正常' }}</span>
     </template>
 
     <!-- 操作列 -->
@@ -39,6 +39,12 @@
       </el-form-item>
       <el-form-item label="电话">
         <el-input v-model="currentData.tel" />
+      </el-form-item>
+      <el-form-item label="用户状态">
+        <el-radio-group v-model="currentData.status">
+          <el-radio :label="0" :checked="currentData.status === 0">正常</el-radio>
+          <el-radio :label="1" :checked="currentData.status === 1">冻结</el-radio>
+        </el-radio-group>
       </el-form-item>
     </el-form>
 
@@ -69,6 +75,11 @@ export default defineComponent({
         { label: "用户名", prop: "username" },
         { label: "姓名", prop: "name" },
         { label: "电话", prop: "tel" },
+        {
+          label: "用户状态",
+          prop: "status",
+          slots: { customRender: 'status' }
+        },
         {
           label: "操作",
           fixed: "right",
