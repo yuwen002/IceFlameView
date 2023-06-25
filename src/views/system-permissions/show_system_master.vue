@@ -13,8 +13,8 @@
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
     </template>
 
-    <template v-slot:status="{ record }">
-      <span :style="{ color: record.status === 1 ? 'red' : 'yellow' }">{{ record.status === 1 ? '冻结' : '正常' }}</span>
+    <template #user_status="status">
+      <span :style="{ color: status.row.status === 1 ? 'red' : '' }">{{ status.row.status === 1 ? '冻结' : '正常' }}</span>
     </template>
 
     <!-- 操作列 -->
@@ -24,7 +24,6 @@
     </template>
   </pro-table>
 
-  <!-- 编辑表单对话框 -->
   <!-- 编辑表单对话框 -->
   <el-dialog title="编辑账号" v-model="dialogVisible">
     <el-form ref="editForm" :model="currentData" label-width="90px">
@@ -49,20 +48,21 @@
     </el-form>
 
     <template #footer>
-      <el-button @click="dialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="handleSubmit">确 定</el-button>
+      <el-button @click="dialogVisible = false">取 消</el-button>
     </template>
 
   </el-dialog>
 </template>
 
 <script>
-import { defineComponent, reactive, ref, toRefs } from "vue"
-import { ShowSystemMaster } from "@/api/system-permissions"
+import { defineComponent, getCurrentInstance, reactive, ref, toRefs } from "vue";
+import { ShowSystemMaster, EditSystemMaster } from "@/api/system-permissions"
 
 export default defineComponent({
   name: 'systemMasterList',
   setup() {
+    const { proxy: ctx } = getCurrentInstance()
     const state = reactive({
       params: {
         page: "1",
@@ -78,7 +78,7 @@ export default defineComponent({
         {
           label: "用户状态",
           prop: "status",
-          slots: { customRender: 'status' }
+          tdSlot: "user_status"
         },
         {
           label: "操作",
@@ -119,8 +119,21 @@ export default defineComponent({
     // 提交修改
     const handleSubmit = async () => {
       try {
-        // await UpdateSystemMaster(state.currentData)
-        proTable.value.reload() // 重新加载表格数据
+        // 获取表单数据
+        const formData = { ...state.currentData }
+        console.log(formData)
+        const { code, message } =  await EditSystemMaster(formData)
+
+        if (+code === 0) {
+          ctx.$message.success({
+            message: message,
+            duration: 1000,
+          })
+        } else {
+          ctx.$message.error(message)
+        }
+
+        proTable.value.refresh() // 重新加载表格数据
         state.dialogVisible = false // 隐藏表单对话框
       } catch (error) {
         console.error(error)
@@ -133,6 +146,7 @@ export default defineComponent({
       getList,
       refresh,
       handleEdit,
+      handleSubmit,
     }
   }
 })

@@ -19,7 +19,7 @@ export const AddSystemMaster = params => {
 export const EditSystemMaster = params => {
   return request({
     url: '/master/edit_system_master',
-    method: 'post',
+    method: 'put',
     params,
   })
 }
