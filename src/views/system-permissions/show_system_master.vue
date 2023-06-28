@@ -20,7 +20,7 @@
     <!-- 操作列 -->
     <template #operate="scope">
       <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-      <el-button size="mini" type="danger">删除</el-button>
+      <el-button size="mini" :type="scope.row.status === 1 ? 'warning' : 'danger'" @click="handleStatus(scope.row)">{{ scope.row.status === 1 ? '启用' : '停用' }}</el-button>
     </template>
   </pro-table>
 
@@ -57,7 +57,7 @@
 
 <script>
 import { defineComponent, getCurrentInstance, reactive, ref, toRefs } from "vue";
-import { ShowSystemMaster, EditSystemMaster } from "@/api/system-permissions"
+import { ShowSystemMaster, EditSystemMaster, EditStatusSystemMaster } from "@/api/system-permissions";
 
 export default defineComponent({
   name: 'systemMasterList',
@@ -140,6 +140,33 @@ export default defineComponent({
       }
     }
 
+    const handleStatus = async (row) => {
+      try {
+        const isConfirmed = confirm(row.status ? '是否启用？' : '是否停用？')
+
+        if (isConfirmed) {
+          const statusData = {
+            status: row.status ? 0 : 1,
+            account_id: row.account_id
+          }
+          // console.log(statusData)
+          const { code, message } = await EditStatusSystemMaster(statusData)
+          if (+code === 0) {
+            ctx.$message.success({
+              message: message,
+              duration: 1000,
+            })
+          } else {
+            ctx.$message.error(message)
+          }
+
+          proTable.value.refresh()
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     return {
       ...toRefs(state),
       proTable,
@@ -147,6 +174,7 @@ export default defineComponent({
       refresh,
       handleEdit,
       handleSubmit,
+      handleStatus,
     }
   }
 })

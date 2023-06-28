@@ -23,3 +23,11 @@ export const EditSystemMaster = params => {
     params,
   })
 }
+
+export const EditStatusSystemMaster = params => {
+  return request({
+    url: '/master/edit_status',
+    method: 'put',
+    params,
+  })
+}
