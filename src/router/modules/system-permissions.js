@@ -5,8 +5,10 @@ const SystemMasterList = () =>
 const SystemMasterAdd = () =>
   import('@/views/system-permissions/add_system_master.vue')
 
-const SystemMasterEdit = () => import('@/views/system-permissions/edit_system_master.vue')
-
+const AuthPermissionList = () =>
+  import('@/views/system-permissions/show_auth_permission.vue')
+const AuthPermissionAdd = () =>
+  import('@/views/system-permissions/add_auth_permission.vue')
 export default [
   {
     path: '',
@@ -35,17 +37,25 @@ export default [
         meta: {
           title: '新建管理员用户',
         },
-        // hidden: true,
+        hidden: true,
       },
       {
-        path: '/master/edit',
-        name: 'systemMasterEdit',
-        cn_name: '编辑管理员用户',
-        component: SystemMasterEdit,
+        path: '/auth/permission/list',
+        name: 'authPermissionList',
+        cn_name: '权限列表',
+        component: AuthPermissionList,
         meta: {
-          title: '编辑管理员用户'
+          title: '权限列表',
         },
-        hidden: true,
+      },
+      {
+        path: '/auth/permission/add',
+        name: 'authPermissionAdd',
+        cn_name: '添加权限',
+        component: AuthPermissionAdd,
+        meta: {
+          title: '添加权限',
+        },
       },
     ],
   },

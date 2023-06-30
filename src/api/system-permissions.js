@@ -31,3 +31,19 @@ export const EditStatusSystemMaster = params => {
     params,
   })
 }
+
+
+export const ShowAuthPermission = params => {
+  return request({
+    url: '/master/auth/show_permission',
+    method: 'get',
+    params
+  })
+}
+
+export const GetAuthFirstPermission = () => {
+  return request({
+    url: '/master/auth/show_first_permission',
+    method: 'get',
+  })
+}

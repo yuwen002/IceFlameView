@@ -121,7 +121,7 @@ export default defineComponent({
       try {
         // 获取表单数据
         const formData = { ...state.currentData }
-        console.log(formData)
+        // console.log(formData)
         const { code, message } =  await EditSystemMaster(formData)
 
         if (+code === 0) {
