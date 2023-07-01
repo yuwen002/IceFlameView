@@ -64,11 +64,6 @@ export default defineComponent({
   setup() {
     const { proxy: ctx } = getCurrentInstance()
     const state = reactive({
-      params: {
-        page: "1",
-        size: "10"
-      },
-      // 表格列配置，大部分属性跟el-table-column配置一样
       columns: [
         { label: "序号", type: "index" },
         { label: "ID", prop: "account_id" },
@@ -89,13 +84,21 @@ export default defineComponent({
         }
       ],
       dialogVisible: false,
-      currentData: {}
+      currentData: {},
+      paginationConfig: {
+        layout: "total, prev, pager, next, sizes",
+        pageSize: 10,
+        pageSizes: [10, 20, 50, 100],
+      },
     })
 
     // 请求函数
     const getList = async (params) => {
       // params是从组件接收的，包含分页和搜索字段。
-      const { code, data, message } = await ShowSystemMaster(state.params)
+      const { code, data, message } = await ShowSystemMaster({
+        page: params.current,
+        size: params.size
+      })
 
       // 必须要返回一个对象，包含data数组和total总数
       return {

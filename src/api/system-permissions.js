@@ -47,3 +47,11 @@ export const GetAuthFirstPermission = () => {
     method: 'get',
   })
 }
+
+export const AddAuthPermission = params => {
+  return request({
+    url: '/master/auth/add_permission',
+    method: 'post',
+    params
+  })
+}

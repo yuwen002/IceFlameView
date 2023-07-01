@@ -56,6 +56,7 @@ export default [
         meta: {
           title: '添加权限',
         },
+        hidden: true,
       },
     ],
   },
