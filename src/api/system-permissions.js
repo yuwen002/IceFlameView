@@ -55,3 +55,11 @@ export const AddAuthPermission = params => {
     params
   })
 }
+
+export const EditAuthPermission = params => {
+  return request({
+    url: '/master/auth/edit_permission',
+    method: 'put',
+    params
+  })
+}

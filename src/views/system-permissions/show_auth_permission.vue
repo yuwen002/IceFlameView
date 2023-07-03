@@ -15,8 +15,8 @@
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
     </template>
 
-    <template #user_status="status">
-      <span :style="{ color: status.row.status === 1 ? 'red' : '' }">{{ status.row.status === 1 ? '冻结' : '正常' }}</span>
+    <template #module_status="status">
+      <span :style="{ color: status.row.status === 1 ? 'red' : '' }">{{ status.row.status === 1 ? '停用' : '正常' }}</span>
     </template>
 
     <!-- 操作列 -->
@@ -26,11 +26,67 @@
     </template>
   </pro-table>
 
+  <!-- 编辑表单对话框 -->
+  <el-dialog title="编辑权限" v-model="dialogVisible">
+    <el-form ref="editForm" :model="currentData" label-width="90px">
+      <el-form-item label="ID">
+        <el-input v-model="currentData.id" disabled />
+      </el-form-item>
+      <el-form-item label="上级菜单">
+        <el-select v-model="currentData.fid" placeholder="请选择上级菜单">
+          <el-option
+            v-for="item in menuOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="菜单名称">
+        <el-input v-model="currentData.name" />
+      </el-form-item>
+      <el-form-item label="程序模块">
+        <el-input v-model="currentData.module" />
+      </el-form-item>
+      <el-form-item label="URI地址">
+        <el-input v-model="currentData.uri" />
+      </el-form-item>
+      <el-form-item label="模块类型">
+        <el-select v-model="currentData.type" placeholder="请选择模块类型">
+          <el-option label="菜单" value="1"></el-option>
+          <el-option label="按钮" value="2"></el-option>
+          <el-option label="提交程序" value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="排序">
+        <el-input v-model="currentData.sort" />
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input v-model="currentData.remark" />
+      </el-form-item>
+      <el-form-item label="模块状态">
+        <el-radio-group v-model="currentData.status">
+          <el-radio :label="0" :checked="currentData.status === 0">正常</el-radio>
+          <el-radio :label="1" :checked="currentData.status === 1">停用</el-radio>
+        </el-radio-group>
+      </el-form-item>
+    </el-form>
+
+    <template #footer>
+      <el-button type="primary" @click="handleSubmit">确 定</el-button>
+      <el-button @click="dialogVisible = false">取 消</el-button>
+    </template>
+
+  </el-dialog>
 </template>
 
 <script>
-import { defineComponent, getCurrentInstance, reactive, ref, toRefs, watch } from "vue";
-import { ShowAuthPermission } from "@/api/system-permissions";
+import { defineComponent, getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from "vue";
+import {
+  EditAuthPermission,
+  GetAuthFirstPermission,
+  ShowAuthPermission
+} from "@/api/system-permissions";
 
 export default defineComponent({
   name: "authPermissionList",
@@ -50,7 +106,7 @@ export default defineComponent({
         { label: "菜单名称", prop: "name" },
         { label: "程序模块", prop: "module" },
         { label: "URI地址", prop: "uri" },
-        { label: "模块状态", prop: "status", tdSlot: "user_status" },
+        { label: "模块状态", prop: "status", tdSlot: "module_status" },
         {
           label: "操作",
           fixed: "right",
@@ -60,7 +116,7 @@ export default defineComponent({
         }
       ],
       dialogVisible: false,
-      currentData: {},
+      currentData: ref(null),
       paginationConfig: {
         layout: "total, prev, pager, next, sizes",
         pageSize: 10,
@@ -71,7 +127,7 @@ export default defineComponent({
 
 
     const getList = async (params) => {
-      console.log("getlist:", params)
+      // console.log("getlist:", params)
       const { code, data, message } = await ShowAuthPermission({
         page: params.current,
         size: params.size
@@ -83,11 +139,57 @@ export default defineComponent({
       }
     }
 
+    const menuOptions = ref([]) // 下拉菜单选项的数据数组
+    const fetchMenuOptions = async () => {
+      const { code, message, data } = await GetAuthFirstPermission()
+      // console.log(data)
+      if (+code === 0) {
+        menuOptions.value = [{ id: 0, name: '一级菜单' }, ...data.list]
+      } else {
+        ctx.$message.error(message)
+      }
+    }
+
+    // 打开编辑表单对话框
+    const handleEdit = (row) => {
+      state.currentData = { ...row, 'type': row.type.toString()} // 这里需要深拷贝一份，防止修改数据时影响列表中的数据
+      state.dialogVisible = true
+    }
+
+    const handleSubmit = async () => {
+      try {
+        // 获取表单数据
+        const formData = { ...state.currentData }
+        // console.log(formData)
+        const { code, message } =  await EditAuthPermission(formData)
+
+        if (+code === 0) {
+          ctx.$message.success({
+            message: message,
+            duration: 1000,
+          })
+        } else {
+          ctx.$message.error(message)
+        }
+
+        proTable.value.refresh() // 重新加载表格数据
+        state.dialogVisible = false // 隐藏表单对话框
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    onMounted(fetchMenuOptions)
+
     return {
       ...toRefs(state),
       proTable,
       getList,
       refresh,
+      menuOptions,
+      fetchMenuOptions,
+      handleEdit,
+      handleSubmit,
     }
   }
 })
