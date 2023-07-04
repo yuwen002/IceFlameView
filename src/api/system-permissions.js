@@ -63,3 +63,27 @@ export const EditAuthPermission = params => {
     params
   })
 }
+
+export const ShowAutRole = params => {
+  return request({
+    url: '/master/auth/show_role',
+    method: 'get',
+    params
+  })
+}
+
+export const AddAutRole = params => {
+  return request({
+    url: '/master/auth/add_role',
+    method: 'post',
+    params
+  })
+}
+
+export const EditAutRole = params => {
+  return request({
+    url: '/master/auth/edit_role',
+    method: 'put',
+    params
+  })
+}

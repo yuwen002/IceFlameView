@@ -107,6 +107,8 @@ export default defineComponent({
         { label: "程序模块", prop: "module" },
         { label: "URI地址", prop: "uri" },
         { label: "模块状态", prop: "status", tdSlot: "module_status" },
+        { label: "创建时间", prop: "created_at" },
+        { label: "修改时间", prop: "updated_at" },
         {
           label: "操作",
           fixed: "right",

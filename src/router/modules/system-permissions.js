@@ -9,6 +9,9 @@ const AuthPermissionList = () =>
   import('@/views/system-permissions/show_auth_permission.vue')
 const AuthPermissionAdd = () =>
   import('@/views/system-permissions/add_auth_permission.vue')
+
+const AuthRoleList = () => import('@/views/system-permissions/show_auth_role.vue')
+const AuthRoleAdd =() => import('@/views/system-permissions/add_auth_role.vue')
 export default [
   {
     path: '',
@@ -55,6 +58,25 @@ export default [
         component: AuthPermissionAdd,
         meta: {
           title: '添加权限',
+        },
+        hidden: true,
+      },
+      {
+        path: '/auth/role/list',
+        name: 'authRoleList',
+        cn_name: '管理员角色列表',
+        component: AuthRoleList,
+        meta: {
+          title: '角色列表',
+        },
+      },
+      {
+        path: '/auth/role/add',
+        name: 'authRoleAdd',
+        cn_name: '添加管理员角色',
+        component: AuthRoleAdd,
+        meta: {
+          title: '添加管理员角色',
         },
         hidden: true,
       },
