@@ -87,3 +87,11 @@ export const EditAutRole = params => {
     params
   })
 }
+
+export const ShowAuthRoleRelation = params => {
+  return request({
+    url: '/master/auth/show_role_relation',
+    method: 'get',
+    params
+  })
+}
