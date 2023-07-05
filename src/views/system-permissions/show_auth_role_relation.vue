@@ -9,13 +9,13 @@
     <!-- 工具栏 -->
     <template #toolbar>
       <el-button type="primary" @click="$router.push({ name: 'authPermissionAdd' })">
-        <el-icon><Plus /></el-icon>&nbsp;添加权限
+        <el-icon><Plus /></el-icon>&nbsp;添加权限绑定
       </el-button>
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
     </template>
 
-    <template #module_status="status">
-      <span :style="{ color: status.row.status === 1 ? 'red' : '' }">{{ status.row.status === 1 ? '停用' : '正常' }}</span>
+    <template #account_id_and_name="text"> <!-- 注意这里使用了 v-slot 指令 -->
+      <span>{{ `(${text.row.account_id})${text.row.name}` }}</span>
     </template>
 
     <!-- 操作列 -->
@@ -45,9 +45,9 @@ export default {
       columns: [
         { label: "序号", type: "index" },
         { label: "管理员ID", prop: "account_id" },
-        { label: "管理员名称", prop: "name" },
+        { label: "管理员名称",prop: "name" },
         { label: "角色ID", prop: "role_id" },
-        { label: "URI地址", prop: "role_name" },
+        { label: "角色名称", prop: "role_name" },
         { label: "创建时间", prop: "created_at" },
         { label: "修改时间", prop: "updated_at" },
         {

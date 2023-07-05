@@ -83,7 +83,7 @@
 <script>
 import { defineComponent, getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from "vue";
 import {
-  EditAuthPermission,
+  EditAuthPermission, EditAuthStatusPermission,
   GetAuthFirstPermission,
   ShowAuthPermission
 } from "@/api/system-permissions";
@@ -181,6 +181,33 @@ export default defineComponent({
       }
     }
 
+    const handleStatus = async (row) => {
+      try {
+        const isConfirmed = confirm(row.status ? '是否启用？' : '是否停用？')
+
+        if (isConfirmed) {
+          const statusData = {
+            status: row.status ? 0 : 1,
+            id: row.id,
+          }
+          // console.log(statusData)
+          const { code, message } = await EditAuthStatusPermission(statusData)
+          if (+code === 0) {
+            ctx.$message.success({
+              message: message,
+              duration: 1000,
+            })
+          } else {
+            ctx.$message.error(message)
+          }
+
+          proTable.value.refresh()
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     onMounted(fetchMenuOptions)
 
     return {
@@ -192,6 +219,7 @@ export default defineComponent({
       fetchMenuOptions,
       handleEdit,
       handleSubmit,
+      handleStatus,
     }
   }
 })
