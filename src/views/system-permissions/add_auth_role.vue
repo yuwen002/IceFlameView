@@ -23,7 +23,7 @@
 
 <script>
 import { computed, getCurrentInstance, ref } from "vue";
-import { AddAutRole } from "@/api/system-permissions";
+import { AddAuthRole } from "@/api/system-permissions";
 
 export default {
   name: "authRoleAdd",
@@ -57,7 +57,7 @@ export default {
       addForm.value.validate(async (valid) => {
         if (valid) {
           loading = true
-          const { code, message } = await AddAutRole(model.value)
+          const { code, message } = await AddAuthRole(model.value)
           if (+code === 0) {
             ctx.$message.success({
               message: message,

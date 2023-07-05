@@ -72,7 +72,7 @@ export const EditAuthStatusPermission = params => {
   })
 }
 
-export const ShowAutRole = params => {
+export const ShowAuthRole = params => {
   return request({
     url: '/master/auth/show_role',
     method: 'get',
@@ -80,7 +80,14 @@ export const ShowAutRole = params => {
   })
 }
 
-export const AddAutRole = params => {
+export const GetAuthRole = () => {
+  return request({
+    url: '/master/auth/get_role',
+    method: 'get',
+  })
+}
+
+export const AddAuthRole = params => {
   return request({
     url: '/master/auth/add_role',
     method: 'post',
@@ -88,7 +95,7 @@ export const AddAutRole = params => {
   })
 }
 
-export const EditAutRole = params => {
+export const EditAuthRole = params => {
   return request({
     url: '/master/auth/edit_role',
     method: 'put',

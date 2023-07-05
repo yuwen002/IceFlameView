@@ -14,6 +14,7 @@ const AuthRoleList = () => import('@/views/system-permissions/show_auth_role.vue
 const AuthRoleAdd = () => import('@/views/system-permissions/add_auth_role.vue')
 
 const AuthRoleRelationList = () => import('@/views/system-permissions/show_auth_role_relation.vue')
+const AuthRoleRelationAdd = () => import('@/views/system-permissions/add_auth_role_relation.vue')
 export default [
   {
     path: '',
@@ -88,7 +89,16 @@ export default [
         cn_name: '管理员角色绑定列表',
         component: AuthRoleRelationList,
         meta: {
-          title: '管理员角色绑定列表',
+          title: '角色绑定列表',
+        },
+      },
+      {
+        path: '/auth/role_relation/add',
+        name: 'authRoleRelationAdd',
+        cn_name: '添加管理员角色绑定',
+        component: AuthRoleRelationAdd,
+        meta: {
+          title: '添加角色绑定',
         },
       },
     ],

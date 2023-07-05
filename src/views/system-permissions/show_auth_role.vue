@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { EditAutRole, ShowAutRole } from "@/api/system-permissions";
+import { EditAuthRole, ShowAuthRole } from "@/api/system-permissions";
 import { getCurrentInstance, reactive, ref, toRefs } from "vue";
 
 export default {
@@ -77,7 +77,7 @@ export default {
       },
     })
     const getList = async (params) => {
-      const { code, data, message } = await ShowAutRole({
+      const { code, data, message } = await ShowAuthRole({
         page: params.current,
         size: params.size
       })
@@ -99,7 +99,7 @@ export default {
         // 获取表单数据
         const formData = { ...state.currentData }
         // console.log(formData)
-        const { code, message } =  await EditAutRole(formData)
+        const { code, message } =  await EditAuthRole(formData)
 
         if (+code === 0) {
           ctx.$message.success({
