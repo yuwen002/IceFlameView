@@ -1,6 +1,6 @@
 <template>
   <el-form :model="model" :rules="rules" ref="addForm" label-width="100px">
-    <el-form-item label="角色名称" prop="name">
+    <el-form-item label="角色名称" prop="role_id">
       <el-select v-model="model.role_id" placeholder="请选择决角色信息">
         <el-option
           v-for="item in roleOptions"
@@ -11,7 +11,7 @@
       </el-select>
     </el-form-item>
     <el-form-item label="管理员信息" prop="account_id">
-      <el-select v-model="model.account_id" placeholder="请选择决角色信息">
+      <el-select v-model="model.account_id" placeholder="请选择管理员信息">
         <el-option
           v-for="item in accountIdOptions"
           :key="item.account_id"
@@ -37,7 +37,7 @@
 
 <script>
 import { computed, getCurrentInstance, onMounted, ref } from "vue";
-import { GetAuthRole } from "@/api/system-permissions";
+import { AddAuthPermission, AddAuthRoleRelation, GetAllSystemMaster, GetAuthRole } from "@/api/system-permissions";
 
 export default {
   name: "authRoleRelationAdd",
@@ -59,13 +59,54 @@ export default {
       const { code, message, data } = await GetAuthRole()
       // console.log(data)
       if (+code === 0) {
-        roleOptions.value = [{ id: 0, name: '一级菜单' }, ...data.list]
+        roleOptions.value = [...data.list]
       } else {
         ctx.$message.error(message)
       }
     }
 
-    onMounted(fetchRoleOptions)
+    const accountIdOptions = ref([])
+    const fetchAccountIdOptions = async () => {
+      const { code, message, data } = await GetAllSystemMaster()
+      console.log(data)
+      if (+code === 0) {
+        accountIdOptions.value = [...data.list]
+      } else {
+        ctx.$message.error(message)
+      }
+    }
+
+    const submit = () => {
+      if (loading) {
+        return
+      }
+
+      addForm.value.validate(async (valid) => {
+        if (valid) {
+          loading = true
+          const { code, message } = await AddAuthRoleRelation(model.value)
+          if (+code === 0) {
+            ctx.$message.success({
+              message: message,
+              duration: 1000,
+            })
+            addForm.value.resetFields()
+          } else {
+            ctx.$message.error(message)
+          }
+          loading = false
+        }
+      })
+    }
+
+    const resetForm = () => {
+      addForm.value.resetFields() // 调用 resetFields() 方法
+    }
+
+    onMounted(() => {
+      fetchRoleOptions()
+      fetchAccountIdOptions()
+    })
 
     return {
       loading,
@@ -73,6 +114,9 @@ export default {
       addForm,
       model,
       roleOptions,
+      accountIdOptions,
+      submit,
+      resetForm,
     }
   }
 };

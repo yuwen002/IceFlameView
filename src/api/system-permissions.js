@@ -8,6 +8,13 @@ export const ShowSystemMaster = params => {
   })
 }
 
+export const GetAllSystemMaster = () => {
+  return request({
+    url: '/master/get_all',
+    method: 'get',
+  })
+}
+
 export const AddSystemMaster = params => {
   return request({
     url: '/master/create_system_master',
@@ -32,12 +39,11 @@ export const EditStatusSystemMaster = params => {
   })
 }
 
-
 export const ShowAuthPermission = params => {
   return request({
     url: '/master/auth/show_permission',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -52,7 +58,7 @@ export const AddAuthPermission = params => {
   return request({
     url: '/master/auth/add_permission',
     method: 'post',
-    params
+    params,
   })
 }
 
@@ -60,7 +66,7 @@ export const EditAuthPermission = params => {
   return request({
     url: '/master/auth/edit_permission',
     method: 'put',
-    params
+    params,
   })
 }
 
@@ -68,7 +74,7 @@ export const EditAuthStatusPermission = params => {
   return request({
     url: '/master/auth/edit_status_permission',
     method: 'put',
-    params
+    params,
   })
 }
 
@@ -76,7 +82,7 @@ export const ShowAuthRole = params => {
   return request({
     url: '/master/auth/show_role',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -91,7 +97,7 @@ export const AddAuthRole = params => {
   return request({
     url: '/master/auth/add_role',
     method: 'post',
-    params
+    params,
   })
 }
 
@@ -99,7 +105,7 @@ export const EditAuthRole = params => {
   return request({
     url: '/master/auth/edit_role',
     method: 'put',
-    params
+    params,
   })
 }
 
@@ -107,6 +113,23 @@ export const ShowAuthRoleRelation = params => {
   return request({
     url: '/master/auth/show_role_relation',
     method: 'get',
-    params
+    params,
+  })
+}
+
+export const AddAuthRoleRelation = params => {
+  return request({
+    url: '/master/auth/add_role_relation',
+    method: 'post',
+    params,
+  })
+}
+
+
+export const EditAuthRoleRelation = params => {
+  return request({
+    url: '/master/auth/edit_role_relation',
+    method: 'put',
+    params,
   })
 }

@@ -100,6 +100,7 @@ export default [
         meta: {
           title: '添加角色绑定',
         },
+        hidden: true,
       },
     ],
   },
