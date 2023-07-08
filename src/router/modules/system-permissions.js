@@ -15,6 +15,8 @@ const AuthRoleAdd = () => import('@/views/system-permissions/add_auth_role.vue')
 
 const AuthRoleRelationList = () => import('@/views/system-permissions/show_auth_role_relation.vue')
 const AuthRoleRelationAdd = () => import('@/views/system-permissions/add_auth_role_relation.vue')
+const AuthRoleRelationShowEdit = () => import('@/views/system-permissions/show_edit_auth_role_relation.vue')
+
 export default [
   {
     path: '',
@@ -102,6 +104,15 @@ export default [
         },
         hidden: true,
       },
+      {
+        path: '/auth/role_relation/show_edit',
+        name: 'authRoleRelationShowEdit',
+        cn_name: '查看权限分配',
+        component: AuthRoleRelationShowEdit,
+        meta: {
+          title: '查看权限分配',
+        },
+      }
     ],
   },
 ]

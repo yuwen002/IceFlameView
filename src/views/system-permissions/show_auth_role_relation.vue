@@ -20,6 +20,7 @@
 
     <!-- 操作列 -->
     <template #operate="scope">
+      <el-button size="mini" type="primary" @click="$router.push({ name: 'authRoleRelationShowEdit', params: { role_id: scope.row.role_id } })">权限分配</el-button>
       <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
       <el-button size="mini" :type="scope.row.status === 1 ? 'warning' : 'danger'" @click="handleStatus(scope.row)">{{ scope.row.status === 1 ? '启用' : '停用' }}</el-button>
     </template>
@@ -92,7 +93,7 @@ export default {
         {
           label: "操作",
           fixed: "right",
-          width: 180,
+          width: 280,
           align: "center",
           tdSlot: "operate" // 自定义单元格内容的插槽名称
         }
