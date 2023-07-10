@@ -20,7 +20,7 @@
 
     <!-- 操作列 -->
     <template #operate="scope">
-      <el-button size="mini" type="primary" @click="$router.push({ name: 'authRoleRelationShowEdit', params: { role_id: scope.row.role_id } })">权限分配</el-button>
+      <el-button size="mini" type="primary" @click="$router.push({ name: 'authRoleRelationShowEdit', query: { role_id: scope.row.role_id } })">权限分配</el-button>
       <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
       <el-button size="mini" :type="scope.row.status === 1 ? 'warning' : 'danger'" @click="handleStatus(scope.row)">{{ scope.row.status === 1 ? '启用' : '停用' }}</el-button>
     </template>
@@ -134,7 +134,6 @@ export default {
     const accountIdOptions = ref([])
     const fetchAccountIdOptions = async () => {
       const { code, message, data } = await GetAllSystemMaster()
-      console.log(data)
       if (+code === 0) {
         accountIdOptions.value = [...data.list]
       } else {

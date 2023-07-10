@@ -1,10 +1,17 @@
 <template>
   <el-form :model="model" :rules="rules" ref="addForm" label-width="100px">
     <el-form-item label="权限信息" prop="permission_ids">
-      <div v-for="item in permissions" :key="item.id">
+      <div v-for="item in checkboxOptions" :key="item.id">
         <strong>{{ item.name }}</strong>
-        <el-checkbox-group v-model="form.permission_ids">
-          <el-checkbox v-for="childItem in item.children" :key="childItem.id" :label="childItem.name">
+        <el-checkbox-group v-model="model.permission_ids">
+          <el-checkbox
+            v-for="childItem in item.children"
+            :key="childItem.id"
+            :label="childItem.name"
+            v-model="childItem.checked"
+            :true-label="1"
+            :false-label="0"
+          >
             {{ childItem.name }}
           </el-checkbox>
         </el-checkbox-group>
@@ -21,9 +28,9 @@
 </template>
 
 <script>
-import { computed, getCurrentInstance, onMounted, ref } from "vue";
-import { ShowEditAuthRoleRelation } from "@/api/system-permissions";
-import { useRoute } from "vue-router";
+import { computed, getCurrentInstance, onMounted, ref } from 'vue'
+import { AddAuthRoleRelation, ShowEditAuthRoleRelation } from "@/api/system-permissions";
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'authRoleRelationShowEdit',
@@ -33,15 +40,48 @@ export default {
     const { proxy: ctx } = getCurrentInstance()
     const btnText = computed(() => (loading ? '提交中...' : '提交'))
     const addForm = ref(null)
-    const checkboxOptions = ref([])
     const route = useRoute()
+    const model = ref({
+      permission_ids: '',
+    })
+
+    const checkboxOptions = ref([])
     const fetchCheckboxOptions = async () => {
       const { code, message, data } = await ShowEditAuthRoleRelation({
-        role_id: route.params.role_id
+        role_id: route.query.role_id,
       })
+
+      if (+code === 0) {
+        checkboxOptions.value = [...data.list]
+      } else {
+        ctx.$message.error(message)
+      }
     }
     const resetForm = () => {
       addForm.value.resetFields() // 调用 resetFields() 方法
+    }
+
+    const submit = () => {
+      if (loading) {
+        return
+      }
+
+      addForm.value.validate(async (valid) => {
+        if (valid) {
+          loading = true
+          const { code, message } = await AddAuthRoleRelation(model.value)
+          if (+code === 0) {
+            ctx.$message.success({
+              message: message,
+              duration: 1000,
+            })
+            addForm.value.resetFields()
+          } else {
+            ctx.$message.error(message)
+          }
+          loading = false
+        }
+      })
     }
 
     onMounted(fetchCheckboxOptions)
@@ -49,6 +89,7 @@ export default {
       loading,
       btnText,
       addForm,
+      model,
       checkboxOptions,
       resetForm,
     }
