@@ -7,10 +7,10 @@
           <el-checkbox
             v-for="childItem in item.children"
             :key="childItem.id"
-            :label="childItem.name"
-            v-model="childItem.checked"
-            :true-label="1"
-            :false-label="0"
+            :label="childItem.id"
+            :value="childItem.id"
+            :checked="childItem.checked === 1"
+            @change="updateCheckedState(childItem)"
           >
             {{ childItem.name }}
           </el-checkbox>
@@ -28,12 +28,16 @@
 </template>
 
 <script>
-import { computed, getCurrentInstance, onMounted, ref } from 'vue'
-import { AddAuthRoleRelation, ShowEditAuthRoleRelation } from "@/api/system-permissions";
+import { computed, getCurrentInstance, onMounted, ref, reactive } from 'vue'
+import {
+  EditAuthRolePermissionRelation,
+  ShowEditAuthRoleRelation
+} from "@/api/system-permissions";
 import { useRoute } from 'vue-router'
 
 export default {
   name: 'authRoleRelationShowEdit',
+  methods: { reactive },
   setup() {
     let loading = false
 
@@ -42,7 +46,7 @@ export default {
     const addForm = ref(null)
     const route = useRoute()
     const model = ref({
-      permission_ids: '',
+      permission_ids: [],
     })
 
     const checkboxOptions = ref([])
@@ -69,7 +73,14 @@ export default {
       addForm.value.validate(async (valid) => {
         if (valid) {
           loading = true
-          const { code, message } = await AddAuthRoleRelation(model.value)
+
+          const params = {
+            permission_ids: model.value.permission_ids,
+            role_id: route.query.role_id,
+          }
+
+          const { code, message } = await EditAuthRolePermissionRelation(params)
+          console.log(message)
           if (+code === 0) {
             ctx.$message.success({
               message: message,
@@ -84,6 +95,10 @@ export default {
       })
     }
 
+    const updateCheckedState = (childItem) => {
+      childItem.checked = childItem.checked === 1 ? 0 : 1;
+    }
+
     onMounted(fetchCheckboxOptions)
     return {
       loading,
@@ -92,6 +107,8 @@ export default {
       model,
       checkboxOptions,
       resetForm,
+      submit,
+      updateCheckedState,
     }
   },
 }

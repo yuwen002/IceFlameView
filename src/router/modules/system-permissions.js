@@ -112,6 +112,7 @@ export default [
         meta: {
           title: '查看权限分配',
         },
+        hidden: true,
       },
     ],
   },
