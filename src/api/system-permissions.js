@@ -149,3 +149,19 @@ export const EditAuthRolePermissionRelation = params => {
     params,
   })
 }
+
+export const ShowAuthPermissionExclude = params => {
+  return request({
+    url: '/master/auth/show_permission_exclude',
+    method: 'get',
+    params,
+  })
+}
+
+export const AddAuthPermissionExclude = params => {
+  return request({
+    url: '/master/auth/add_permission_exclude',
+    method: 'post',
+    params,
+  })
+}

@@ -16,13 +16,14 @@ const AuthRoleAdd = () => import('@/views/system-permissions/add_auth_role.vue')
 const AuthRoleRelationList = () => import('@/views/system-permissions/show_auth_role_relation.vue')
 const AuthRoleRelationAdd = () => import('@/views/system-permissions/add_auth_role_relation.vue')
 const AuthRoleRelationShowEdit = () => import('@/views/system-permissions/show_edit_auth_role_relation.vue')
-
+const AuthPermissionExcludeList = () => import('@/views/system-permissions/show_auth_permission_exclude.vue')
+const AuthPermissionExcludeAdd = () => import('@/views/system-permissions/add_auth_permission_exclude.vue')
 export default [
   {
     path: '',
     component: Layout,
     name: 'systemManagement',
-    cn_name: '权限管理',
+    cn_name: '系统管理',
     meta: {
       title: '系统管理',
     },
@@ -111,6 +112,25 @@ export default [
         component: AuthRoleRelationShowEdit,
         meta: {
           title: '查看权限分配',
+        },
+        hidden: true,
+      },
+      {
+        path: '/auth/permission_exclude/list',
+        name: 'authPermissionExcludeList',
+        cn_name: '权限排除列表',
+        component: AuthPermissionExcludeList,
+        meta: {
+          title: '权限排除列表',
+        },
+      },
+      {
+        path: '/auth/role_relation/show',
+        name: 'authRoleRelationShowAdd',
+        cn_name: '添加权限排除',
+        component: AuthPermissionExcludeAdd,
+        meta: {
+          title: '添加权限排除',
         },
         hidden: true,
       },
