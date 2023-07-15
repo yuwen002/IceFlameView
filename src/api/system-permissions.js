@@ -165,3 +165,19 @@ export const AddAuthPermissionExclude = params => {
     params,
   })
 }
+
+export const EditAuthPermissionExclude = params => {
+  return request({
+    url: '/master/auth/edit_permission_exclude',
+    method: 'put',
+    params,
+  })
+}
+
+export const DelAuthPermissionExclude = params => {
+  return request({
+    url: '/master/auth/delete_permission_exclude',
+    method: 'delete',
+    params,
+  })
+}

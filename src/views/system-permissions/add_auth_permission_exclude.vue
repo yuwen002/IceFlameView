@@ -49,6 +49,13 @@ export default {
           trigger: ['blur', 'change'],
         },
       ],
+      uri: [
+        {
+          required: true,
+          message: 'URI地址不能为空',
+          trigger: ['blur', 'change'],
+        },
+      ],
     }
 
     let loading = false
