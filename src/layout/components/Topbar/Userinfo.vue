@@ -92,7 +92,7 @@ export default defineComponent({
     }
 
     const modifyPassword = () => {
-      router.push({name: ''})
+      router.push({name: 'modifyPassword'})
     }
 
     return {

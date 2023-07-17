@@ -33,13 +33,16 @@ import login from './modules/login'
 import lock from './modules/lock'
 import home from './modules/home'
 import systemPermissions from '@/router/modules/system-permissions'
+import systemPermissionsExclude from '@/router/modules/system-permissions-exclude'
 // import test from './modules/test'
 
 /* 菜单栏的路由 */
 // 固定菜单
 export const fixedRoutes = [...home]
 // 动态菜单
-export const asyncRoutes = [...systemPermissions]
+export const asyncRoutes = [
+  ...systemPermissions,
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -52,6 +55,7 @@ const router = createRouter({
     ...login,
     ...lock,
     ...fixedRoutes,
+    ...systemPermissionsExclude,
     ...error,
   ],
   scrollBehavior(to, from, savedPosition) {
