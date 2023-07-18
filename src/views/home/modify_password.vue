@@ -34,7 +34,7 @@ export default {
 
     const { proxy: ctx } = getCurrentInstance();
     const btnText = computed(() => (loading ? "提交中..." : "提交"));
-    const addForm = ref(null);
+    const addForm = ref(null)
 
     const rules = {
       old_password: [
@@ -64,7 +64,7 @@ export default {
           validator: (rule, value) => {
             if (value === '') {
               return Promise.reject('请再次输入密码')
-            } else if (value !== model.value.password) {
+            } else if (value !== model.value.new_password) {
               return Promise.reject('两次输入密码不一致')
             } else {
               return Promise.resolve()
@@ -73,7 +73,7 @@ export default {
           trigger: 'blur',
         },
       ]
-    };
+    }
 
     const model = ref({
       old_password: "",

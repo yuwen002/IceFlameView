@@ -39,6 +39,14 @@ export const EditStatusSystemMaster = params => {
   })
 }
 
+export const ResetPasswordSystemMaster = params => {
+  return request({
+    url: '/master/reset_password',
+    method: 'put',
+    params,
+  })
+}
+
 export const ShowAuthPermission = params => {
   return request({
     url: '/master/auth/show_permission',

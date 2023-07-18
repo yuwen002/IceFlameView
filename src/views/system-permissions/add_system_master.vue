@@ -37,7 +37,6 @@ import {
   toRefs,
   ref,
   computed,
-  watch,
 } from 'vue'
 import { AddSystemMaster } from '@/api/system-permissions'
 
@@ -45,12 +44,6 @@ export default defineComponent({
   name: 'systemMasterAdd',
   setup() {
     const { proxy: ctx } = getCurrentInstance() // 可以把ctx当成vue2中的this
-    // watch(() => state.addForm, (addForm) => {
-    //   console.log(addForm.model, state.addForm.value)
-    //   if (addForm) {
-    //     state.addForm.value = addForm.model
-    //   }
-    // })
     const getRules = () => ({
       username: [
         { required: true, message: '请输入用户名', trigger: 'blur' },
