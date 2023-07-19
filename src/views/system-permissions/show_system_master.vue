@@ -21,6 +21,7 @@
     <template #operate="scope">
       <el-button size="small" type="primary" @click="handleResetPasswordEdit(scope.row)">重置密码</el-button>
       <el-button size="small" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+      <el-button size="small" @click="handleUnlock(scope.row)">解锁</el-button>
       <el-button size="small" :type="scope.row.status === 1 ? 'warning' : 'danger'" @click="handleStatus(scope.row)">{{ scope.row.status === 1 ? '启用' : '停用' }}</el-button>
     </template>
   </pro-table>
@@ -92,7 +93,7 @@ import {
   ShowSystemMaster,
   EditSystemMaster,
   EditStatusSystemMaster,
-  ResetPasswordSystemMaster
+  ResetPasswordSystemMaster, UnlockSystemMaster
 } from "@/api/system-permissions";
 
 export default defineComponent({
@@ -190,7 +191,6 @@ export default defineComponent({
             status: row.status ? 0 : 1,
             account_id: row.account_id
           }
-          // console.log(statusData)
           const { code, message } = await EditStatusSystemMaster(statusData)
           if (+code === 0) {
             ctx.$message.success({
@@ -202,6 +202,31 @@ export default defineComponent({
           }
 
           proTable.value.refresh()
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    const handleUnlock = async (row) => {
+      try {
+        const isConfirmed = confirm('是否解锁用户？')
+
+        if (isConfirmed) {
+          const unlockData = {
+            account_id: row.account_id
+          }
+
+          const { code, message } = await UnlockSystemMaster(unlockData)
+
+          if (+code === 0) {
+            ctx.$message.success({
+              message: message,
+              duration: 1000,
+            })
+          } else {
+            ctx.$message.error(message)
+          }
         }
       } catch (error) {
         console.error(error)
