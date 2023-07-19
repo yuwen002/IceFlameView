@@ -289,7 +289,7 @@ export default defineComponent({
           const { code, message } = await ResetPasswordSystemMaster(resetPasswordData)
           if (+code === 0) {
             ctx.$message.success({
-              message: message,
+              message: "解锁用户成功",
               duration: 1000,
             })
           } else {
@@ -311,6 +311,7 @@ export default defineComponent({
       handleEdit,
       handleSubmit,
       handleStatus,
+      handleUnlock,
       resetPasswordForm,
       resetPasswordRules,
       model,
