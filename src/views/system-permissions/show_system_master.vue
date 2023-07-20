@@ -21,7 +21,7 @@
     <template #operate="scope">
       <el-button size="small" type="primary" @click="handleResetPasswordEdit(scope.row)">重置密码</el-button>
       <el-button size="small" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-      <el-button size="small" @click="handleUnlock(scope.row)">解锁</el-button>
+      <el-button size="small" type="primary" @click="handleUnlock(scope.row)">解锁</el-button>
       <el-button size="small" :type="scope.row.status === 1 ? 'warning' : 'danger'" @click="handleStatus(scope.row)">{{ scope.row.status === 1 ? '启用' : '停用' }}</el-button>
     </template>
   </pro-table>
@@ -221,7 +221,7 @@ export default defineComponent({
 
           if (+code === 0) {
             ctx.$message.success({
-              message: message,
+              message: '解锁用户成功',
               duration: 1000,
             })
           } else {
@@ -289,7 +289,7 @@ export default defineComponent({
           const { code, message } = await ResetPasswordSystemMaster(resetPasswordData)
           if (+code === 0) {
             ctx.$message.success({
-              message: "解锁用户成功",
+              message: message,
               duration: 1000,
             })
           } else {

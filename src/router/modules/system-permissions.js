@@ -18,6 +18,9 @@ const AuthRoleRelationAdd = () => import('@/views/system-permissions/add_auth_ro
 const AuthRoleRelationShowEdit = () => import('@/views/system-permissions/show_edit_auth_role_relation.vue')
 const AuthPermissionExcludeList = () => import('@/views/system-permissions/show_auth_permission_exclude.vue')
 const AuthPermissionExcludeAdd = () => import('@/views/system-permissions/add_auth_permission_exclude.vue')
+
+const VisitCategoryList = () => import('@/views/system-permissions/show_visit_category.vue')
+const VisitCategoryAdd = () => import('@/views/system-permissions/add_visit_category.vue')
 export default [
   {
     path: '',
@@ -125,12 +128,30 @@ export default [
         },
       },
       {
-        path: '/auth/role_relation/show',
-        name: 'authRoleRelationShowAdd',
+        path: '/auth/permission_exclude/add',
+        name: 'authPermissionExcludeAdd',
         cn_name: '添加权限排除',
         component: AuthPermissionExcludeAdd,
         meta: {
           title: '添加权限排除',
+        },
+      },
+      {
+        path: '/auth/visit_category/list',
+        name: 'visitCategoryList',
+        cn_name: '访问类型列表',
+        component: VisitCategoryList,
+        meta: {
+          title: '访问类型列表',
+        },
+      },
+      {
+        path: '/auth/visit_category/add',
+        name: 'visitCategoryAdd',
+        cn_name: '添加访问类型',
+        component: VisitCategoryAdd,
+        meta: {
+          title: '添加访问类型',
         },
         hidden: true,
       },

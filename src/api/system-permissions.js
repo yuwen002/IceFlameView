@@ -197,3 +197,26 @@ export const DelAuthPermissionExclude = params => {
     params,
   })
 }
+
+export const ShowVisitCategory = params => {
+  return request({
+    url: '/visit_category/show',
+    method: 'get',
+    params,
+  })
+}
+export const AddVisitCategory = params => {
+  return request({
+    url: '/visit_category/add',
+    method: 'post',
+    params,
+  })
+}
+
+export const EditVisitCategory = params => {
+  return request({
+    url: '/visit_category/edit',
+    method: 'put',
+    params,
+  })
+}
