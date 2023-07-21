@@ -21,6 +21,8 @@ const AuthPermissionExcludeAdd = () => import('@/views/system-permissions/add_au
 
 const VisitCategoryList = () => import('@/views/system-permissions/show_visit_category.vue')
 const VisitCategoryAdd = () => import('@/views/system-permissions/add_visit_category.vue')
+const VisitLogsShow = () => import('@/views/system-permissions/show_visit_logs.vue')
+
 export default [
   {
     path: '',
@@ -154,6 +156,15 @@ export default [
           title: '添加访问类型',
         },
         hidden: true,
+      },
+      {
+        path: '/visitor_logs/show',
+        name: 'visitLogsShow',
+        cn_name: '访问日志列表',
+        component: VisitLogsShow,
+        meta: {
+          title: '访问日志列表',
+        },
       },
     ],
   },

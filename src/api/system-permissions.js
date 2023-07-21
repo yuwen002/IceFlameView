@@ -220,3 +220,19 @@ export const EditVisitCategory = params => {
     params,
   })
 }
+
+export const DeleteCacheVisitCategory = params => {
+  return request({
+    url: '/visit_category/delete',
+    method: 'delete',
+    params,
+  })
+}
+
+export const ShowVisitLogs = params => {
+  return request({
+    url: '/visitor_logs/show',
+    method: 'get',
+    params,
+  })
+}

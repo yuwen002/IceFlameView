@@ -1,6 +1,6 @@
 <template>
   <el-form :model="model" :rules="rules" ref="addForm" label-width="100px">
-    <el-form-item label="访问类型标题" prop="title">
+    <el-form-item label="标题" prop="title">
       <el-input v-model.trim="model.title"></el-input>
     </el-form-item>
     <el-form-item>

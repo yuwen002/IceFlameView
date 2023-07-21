@@ -12,16 +12,12 @@
         <el-icon><Plus /></el-icon>&nbsp;添加访问类型
       </el-button>
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
-    </template>
-
-    <template #module_status="status">
-      <span :style="{ color: status.row.status === 1 ? 'red' : '' }">{{ status.row.status === 1 ? '停用' : '正常' }}</span>
+      <el-button size="mini" type="primary" @click="handleDeleteCache">清除缓存</el-button>
     </template>
 
     <!-- 操作列 -->
     <template #operate="scope">
       <el-button size="mini" type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-      <el-button size="mini" :type="scope.row.status === 1 ? 'warning' : 'danger'" @click="handleStatus(scope.row)">{{ scope.row.status === 1 ? '启用' : '停用' }}</el-button>
     </template>
   </pro-table>
 
@@ -44,7 +40,7 @@
 
 <script>
 import { getCurrentInstance, reactive, ref, toRefs } from "vue";
-import { EditVisitCategory, ShowVisitCategory } from "@/api/system-permissions";
+import { DeleteCacheVisitCategory, EditVisitCategory, ShowVisitCategory } from "@/api/system-permissions";
 
 export default {
   name: "visitCategoryList",
@@ -121,11 +117,31 @@ export default {
       }
     }
 
+    const handleDeleteCache = async () => {
+      try {
+        const isConfirmed = confirm('是否删除缓存信息？')
+        if (isConfirmed) {
+          const { code, message } = await DeleteCacheVisitCategory()
+          if (+code === 0) {
+            ctx.$message.success({
+              message: message,
+              duration: 1000,
+            })
+          } else {
+            ctx.$message.error(message)
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
     return {
       ...toRefs(state),
       proTable,
       getList,
       refresh,
+      handleDeleteCache,
       handleEdit,
       handleSubmit,
     }
