@@ -35,7 +35,7 @@ export default {
         { label: "序号", type: "index" },
         { label: "ID", prop: "id" },
         { label: "管理员ID", prop: "account_id" },
-        { label: "分类ID", prop: "os_category" },
+        { label: "分类", prop: "os_category_name" },
         { label: "标题", prop: "visit_category_name" },
         { label: "说明", prop: "description" },
         { label: "创建时间", prop: "created_at" },
