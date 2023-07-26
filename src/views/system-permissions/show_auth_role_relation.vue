@@ -25,11 +25,6 @@
       </el-button>
     </template>
 
-    <template #account_id_and_name="text">
-      <!-- 注意这里使用了 v-slot 指令 -->
-      <span>{{ `(${text.row.account_id})${text.row.name}` }}</span>
-    </template>
-
     <!-- 操作列 -->
     <template #operate="scope">
       <el-button
@@ -110,7 +105,7 @@ export default {
     const state = reactive({
       columns: [
         { label: '序号', type: 'index' },
-        { label: '管理员ID', prop: 'account_id' },
+        { label: '管理员ID', prop: 'account_id'},
         { label: '管理员名称', prop: 'name' },
         { label: '角色ID', prop: 'role_id' },
         { label: '角色名称', prop: 'role_name' },

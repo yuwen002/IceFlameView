@@ -6,6 +6,9 @@
     :columns="columns"
     :pagination="paginationConfig"
   >
+    <template #account_id_and_name="text">
+      <span>{{ `(${text.row.account_id})${text.row.system_master_name}` }}</span>
+    </template>
     <!-- 工具栏 -->
     <template #toolbar>
       <el-button type="danger" @click="refresh"><el-icon><Refresh /></el-icon>&nbsp;刷新</el-button>
@@ -34,10 +37,11 @@ export default {
       columns: [
         { label: "序号", type: "index" },
         { label: "ID", prop: "id" },
-        { label: "管理员ID", prop: "account_id" },
+        { label: "管理员", prop: "account_id", tdSlot: "account_id_and_name" },
         { label: "分类", prop: "os_category_name" },
         { label: "标题", prop: "visit_category_name" },
         { label: "说明", prop: "description" },
+        { label: "IP", prop: "ip" },
         { label: "创建时间", prop: "created_at" },
       ],
       dialogVisible: false,
