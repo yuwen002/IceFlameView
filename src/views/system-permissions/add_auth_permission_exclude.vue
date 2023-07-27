@@ -31,7 +31,7 @@ import { computed, getCurrentInstance, ref } from "vue";
 import { AddAuthPermissionExclude } from "@/api/system-permissions";
 
 export default {
-  name: 'authRoleRelationShowAdd',
+  name: 'authPermissionExcludeAdd',
   setup() {
     const { proxy: ctx } = getCurrentInstance()
     const rules = {

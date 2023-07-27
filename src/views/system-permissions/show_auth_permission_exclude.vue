@@ -10,7 +10,7 @@
     <template #toolbar>
       <el-button
         type="primary"
-        @click="$router.push({ name: 'authRoleRelationShowAdd' })"
+        @click="$router.push({ name: 'authPermissionExcludeAdd' })"
       >
         <el-icon>
           <Plus />
@@ -66,7 +66,6 @@
 import { getCurrentInstance, reactive, ref, toRefs } from 'vue'
 import {
   DelAuthPermissionExclude, EditAuthPermissionExclude,
-  ShowAuthPermission,
   ShowAuthPermissionExclude
 } from "@/api/system-permissions";
 
