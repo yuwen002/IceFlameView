@@ -34,6 +34,7 @@ import lock from './modules/lock'
 import home from './modules/home'
 import systemPermissions from '@/router/modules/system-permissions'
 import systemPermissionsExclude from '@/router/modules/system-permissions-exclude'
+import article from "@/router/modules/article";
 // import test from './modules/test'
 
 /* 菜单栏的路由 */
@@ -42,6 +43,7 @@ export const fixedRoutes = [...home]
 // 动态菜单
 export const asyncRoutes = [
   ...systemPermissions,
+  ...article
 ]
 
 const router = createRouter({
