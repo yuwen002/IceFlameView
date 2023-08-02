@@ -1,5 +1,6 @@
 const Layout = () => import('@/layout/index.vue')
 const SinglePageList = () => import("@/views/article/show_single_page.vue")
+const SinglePageAdd = () => import("@/views/article/add_single_page.vue")
 export default [
   {
     path: '',
@@ -18,6 +19,15 @@ export default [
         component: SinglePageList,
         meta: {
           title: '单页列表',
+        },
+      },
+      {
+        path: '/article/single_page/add',
+        name: 'singlePageAdd',
+        cn_name: '添加单页',
+        component: SinglePageAdd,
+        meta: {
+          title: '添加单页',
         },
       },
     ],

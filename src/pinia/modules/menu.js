@@ -94,7 +94,6 @@ export const useMenus = defineStore('menu', () => {
       const filterRoutes = getFilterRoutes(asyncRoutes, data.list)
       filterRoutes.forEach(route => router.addRoute(route))
 
-      console.log([...fixedRoutes, ...filterRoutes])
       // 生成菜单
       const menus = getFilterMenus([...fixedRoutes, ...filterRoutes])
       setMenus(menus)
