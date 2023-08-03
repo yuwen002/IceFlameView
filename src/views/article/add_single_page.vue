@@ -10,8 +10,7 @@
       <el-input v-model.trim="model.keyword"></el-input>
     </el-form-item>
     <el-form-item label="内容" prop="content">
-      <tinymce v-model="model.content" :height="300" />
-      <TinyMCEComponent />
+      <wangEditor v-model="model.content" :height="300" />
     </el-form-item>
     <el-form-item>
       <el-button
@@ -29,11 +28,11 @@
 
 <script>
 import { computed, getCurrentInstance, ref } from "vue";
-import Tinymce from '@/components/Tinymce'
+import wangEditor  from '@/components/WangEditor'
 
 export default {
   name: "singlePageAdd",
-  components: { Tinymce },
+  components: { wangEditor },
   setup() {
     const { proxy: ctx } = getCurrentInstance()
 

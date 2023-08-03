@@ -38,6 +38,10 @@ const service = axios.create({
   baseURL: 'http://127.0.0.1:8000/manage',
   timeout: 10000,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Accept: 'application/json'
+  },
 })
 
 // 拦截请求
