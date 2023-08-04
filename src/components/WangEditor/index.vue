@@ -12,6 +12,7 @@
       :defaultConfig="editorConfig"
       :mode="mode"
       @onCreated="handleCreated"
+      @input="handleInput"
     />
   </div>
 </template>
@@ -33,7 +34,7 @@ export default {
 
     const toolbarConfig = {excludeKeys: [
         'fullScreen',//不显示全屏
-        'group-video',  // 不显示上传视频
+        'group-video', // 不显示上传视频
       ]}
 
 //菜单配置
@@ -54,7 +55,7 @@ export default {
           base64LimitSize: 10 * 1024, // 10MB
           // 自定义上传图片返回格式【后端返回的格式】
           customInsert(res, insertFn) {
-            if(res.code != 200  ){
+            if(res.code != 200){
               ElMessage.error("上传文件失败，"+res.message)
               return
             }
@@ -92,6 +93,12 @@ export default {
       }
 
     }
+
+    const handleInput = () => {
+      // 监听输入事件，更新valueHtml的值
+      valueHtml.value = editorRef.value?.value || ''
+    }
+
     // 组件销毁时，也及时销毁编辑器
     onBeforeUnmount(() => {
       const editor = editorRef.value
@@ -113,7 +120,8 @@ export default {
       mode: 'default', // 或 'simple'
       toolbarConfig,
       editorConfig,
-      handleCreated
+      handleCreated,
+      handleInput,
     };
   }
 }

@@ -28,7 +28,8 @@
 
 <script>
 import { computed, getCurrentInstance, ref } from "vue";
-import wangEditor  from '@/components/WangEditor'
+import wangEditor  from '@/components/WangEditor/index.vue'
+import { AddAuthPermission } from "@/api/system-permissions";
 
 export default {
   name: "singlePageAdd",
@@ -57,12 +58,37 @@ export default {
       content: '',
     })
 
+    const submit = () => {
+      if (loading) {
+        return
+      }
+
+      addForm.value.validate(async (valid) => {
+        console.log(model.value)
+        // if (valid) {
+        //   loading = true
+        //   const { code, message } = await AddAuthPermission(model.value)
+        //   if (+code === 0) {
+        //     ctx.$message.success({
+        //       message: message,
+        //       duration: 1000,
+        //     })
+        //     addForm.value.resetFields()
+        //   } else {
+        //     ctx.$message.error(message)
+        //   }
+        //   loading = false
+        // }
+      })
+    }
+
     return {
       rules,
       model,
       loading,
       btnText,
       addForm,
+      submit,
     }
   }
 };
