@@ -12,7 +12,7 @@
       :defaultConfig="editorConfig"
       :mode="mode"
       @onCreated="handleCreated"
-      @input="handleInput"
+      @change="handleInput"
     />
   </div>
 </template>
@@ -21,7 +21,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
 import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import { ElMessage } from "element-plus";
+import { ElMessage } from 'element-plus'
 
 export default {
   components: { Editor, Toolbar },
@@ -32,47 +32,50 @@ export default {
     // 内容 HTML
     const valueHtml = ref('') //  工具栏配置
 
-    const toolbarConfig = {excludeKeys: [
-        'fullScreen',//不显示全屏
+    const toolbarConfig = {
+      excludeKeys: [
+        'fullScreen', //不显示全屏
         'group-video', // 不显示上传视频
-      ]}
+      ],
+    }
 
-//菜单配置
-    const editorConfig = { 　　　　placeholder: '请输入内容...',
+    //菜单配置
+    const editorConfig = {
+      placeholder: '请输入内容...',
 
-      MENU_CONF:{
+      MENU_CONF: {
         // 配置默认字号
         // 配置上传图片
-        uploadImage:{
+        uploadImage: {
           // 上传图片请求接口路径
-          server: "/api//v1/upload/file",
+          server: '/api//v1/upload/file',
           // 后端接收的文件名称
-          fieldName: "multipartFile",
+          fieldName: 'multipartFile',
           maxFileSize: 10 * 1024 * 1024, // 上传图片10M
           // 上传的图片类型
-          allowedFileTypes: ["image/*"],
+          allowedFileTypes: ['image/*'],
           // 小于该值就插入 base64 格式（而不上传），默认为 0
           base64LimitSize: 10 * 1024, // 10MB
           // 自定义上传图片返回格式【后端返回的格式】
           customInsert(res, insertFn) {
-            if(res.code != 200){
-              ElMessage.error("上传文件失败，"+res.message)
+            if (res.code != 200) {
+              ElMessage.error('上传文件失败，' + res.message)
               return
             }
 
             // 从 res 中找到 url alt href ，然后插入图片 ,根据后端实际返回的字段来
 
-            insertFn(res.data.url, res.data.alt,res.data.url)
+            insertFn(res.data.url, res.data.alt, res.data.url)
           },
 
           // 将 meta 拼接到 url 参数中，默认 false
           metaWithUrl: true,
           // 单个文件上传成功之后
           onSuccess(file, res) {
-            if(res.code == 200){
+            if (res.code == 200) {
               ElMessage.success(`${file.name} 上传成功`)
               return
-            }else {
+            } else {
               ElMessage.warning(`${file.name} 上传出了点异常`)
               return
             }
@@ -89,9 +92,8 @@ export default {
             console.log(err, res)
             ElMessage.error(`${file.name} 上传出错`)
           },
-        }
-      }
-
+        },
+      },
     }
 
     const handleInput = () => {
@@ -106,12 +108,11 @@ export default {
       editor.destroy()
     })
 
-    const handleCreated = (editor) => {
+    const handleCreated = editor => {
       editorRef.value = editor // 记录 editor 实例，重要！
 
       // 查看所有工具栏key，先查看可以根据实际情况进项增删
-      console.log(editor.getAllMenuKeys())
-
+      // console.log(editor.getAllMenuKeys())
     }
 
     return {
@@ -122,7 +123,7 @@ export default {
       editorConfig,
       handleCreated,
       handleInput,
-    };
-  }
+    }
+  },
 }
 </script>

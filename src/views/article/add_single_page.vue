@@ -29,7 +29,6 @@
 <script>
 import { computed, getCurrentInstance, ref } from "vue";
 import wangEditor  from '@/components/WangEditor/index.vue'
-import { AddAuthPermission } from "@/api/system-permissions";
 
 export default {
   name: "singlePageAdd",
@@ -65,6 +64,7 @@ export default {
 
       addForm.value.validate(async (valid) => {
         console.log(model.value)
+        console.log(model.value.content)
         // if (valid) {
         //   loading = true
         //   const { code, message } = await AddAuthPermission(model.value)
