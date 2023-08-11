@@ -12,7 +12,7 @@
       :defaultConfig="editorConfig"
       :mode="mode"
       @onCreated="handleCreated"
-      @change="handleInput"
+      @onChange="handleInput"
     />
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     const editorRef = shallowRef()
 
     // 内容 HTML
-    const valueHtml = ref('') //  工具栏配置
+    const valueHtml = ref('<p>fffffffffffff</p>') //  工具栏配置
 
     const toolbarConfig = {
       excludeKeys: [
@@ -99,6 +99,7 @@ export default {
     const handleInput = () => {
       // 监听输入事件，更新valueHtml的值
       valueHtml.value = editorRef.value?.value || ''
+      console.log("我的：", editorRef.value)
     }
 
     // 组件销毁时，也及时销毁编辑器
@@ -110,7 +111,6 @@ export default {
 
     const handleCreated = editor => {
       editorRef.value = editor // 记录 editor 实例，重要！
-
       // 查看所有工具栏key，先查看可以根据实际情况进项增删
       // console.log(editor.getAllMenuKeys())
     }

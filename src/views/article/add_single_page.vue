@@ -28,7 +28,7 @@
 
 <script>
 import { computed, getCurrentInstance, ref } from "vue";
-import wangEditor  from '@/components/WangEditor/index.vue'
+import wangEditor  from '@/components/WangEditor/wang-editor.vue'
 
 export default {
   name: "singlePageAdd",
