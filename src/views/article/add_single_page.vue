@@ -10,7 +10,7 @@
       <el-input v-model.trim="model.keyword"></el-input>
     </el-form-item>
     <el-form-item label="内容" prop="content">
-      <wangEditor v-model="model.content" :height="300" />
+      <wang-editor v-model:modelValue="model.content" :height="300" />
     </el-form-item>
     <el-form-item>
       <el-button
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { computed, getCurrentInstance, ref } from "vue";
+import { computed, getCurrentInstance, ref, watch } from "vue";
 import wangEditor  from '@/components/WangEditor/wang-editor.vue'
 
 export default {
@@ -57,13 +57,20 @@ export default {
       content: '',
     })
 
+    watch(
+      () => model.value.content,
+      (newContent) => {
+        console.log(newContent);
+      }
+    )
+
     const submit = () => {
       if (loading) {
         return
       }
 
       addForm.value.validate(async (valid) => {
-        console.log(model.value)
+        // console.log(model.value)
         console.log(model.value.content)
         // if (valid) {
         //   loading = true
