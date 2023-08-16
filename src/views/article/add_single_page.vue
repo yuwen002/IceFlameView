@@ -10,7 +10,7 @@
       <el-input v-model.trim="model.keyword"></el-input>
     </el-form-item>
     <el-form-item label="内容" prop="content">
-      <wang-editor v-model:content="model.content" :height="300" />
+      <wang-editor v-model="content" @onChange="handleEditorChange"  :height="300" />
     </el-form-item>
     <el-form-item>
       <el-button
@@ -58,14 +58,20 @@ export default {
       valueHtml:'',
     })
 
+    const content = ref('')
+    const handleEditorChange = (newContent) => {
+      content.value = newContent.getHtml()
+    };
+
     const submit = () => {
+      console.log(content.value)
       if (loading) {
         return
       }
 
       addForm.value.validate(async (valid) => {
         // console.log(model.value)
-        console.log(model.value)
+        // console.log(model.value)
         // if (valid) {
         //   loading = true
         //   const { code, message } = await AddAuthPermission(model.value)
@@ -86,6 +92,8 @@ export default {
     return {
       rules,
       model,
+      content,
+      handleEditorChange,
       loading,
       btnText,
       addForm,
