@@ -10,7 +10,7 @@
       <el-input v-model.trim="model.keyword"></el-input>
     </el-form-item>
     <el-form-item label="内容" prop="content">
-      <wang-editor v-model="content" @onChange="handleEditorChange"  :height="300" />
+      <wang-editor v-model:html="formData" :height="300" />
     </el-form-item>
     <el-form-item>
       <el-button
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { computed, getCurrentInstance, ref, watch } from "vue";
+import { computed, getCurrentInstance, ref, shallowReactive, watch } from "vue";
 import wangEditor  from '@/components/WangEditor/wang-editor.vue'
 
 export default {
@@ -58,13 +58,12 @@ export default {
       valueHtml:'',
     })
 
-    const content = ref('')
-    const handleEditorChange = (newContent) => {
-      content.value = newContent.getHtml()
-    };
+    const formData = ref()
+
 
     const submit = () => {
-      console.log(content.value)
+      const editor = formData.value;
+      console.log(editor);
       if (loading) {
         return
       }
@@ -92,11 +91,10 @@ export default {
     return {
       rules,
       model,
-      content,
-      handleEditorChange,
       loading,
       btnText,
       addForm,
+      formData,
       submit,
     }
   }
