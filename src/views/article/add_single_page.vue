@@ -10,7 +10,7 @@
       <el-input v-model.trim="model.keyword"></el-input>
     </el-form-item>
     <el-form-item label="内容" prop="content">
-      <wang-editor v-model:html="formData" :height="300" />
+      <wangEditor :editorValue="valueHtml" :height="300" />
     </el-form-item>
     <el-form-item>
       <el-button
@@ -58,11 +58,11 @@ export default {
       valueHtml:'',
     })
 
-    const formData = ref()
+    const valueHtml = ref()
 
 
     const submit = () => {
-      const editor = formData.value;
+      const editor = valueHtml.value;
       console.log(editor);
       if (loading) {
         return
@@ -94,7 +94,7 @@ export default {
       loading,
       btnText,
       addForm,
-      formData,
+      valueHtml,
       submit,
     }
   }

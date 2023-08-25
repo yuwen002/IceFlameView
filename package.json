@@ -21,7 +21,6 @@
   ],
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
-    "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^0.21.1",
     "pinia": "^2.0.14",
@@ -29,8 +28,7 @@
     "tinymce-vue": "^1.0.0",
     "vue": "3.2.33",
     "vue-router": "^4.0.5",
-    "vuex": "^4.0.0",
-    "wangeditor5-for-vue3": "^1.0.0"
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@ehutch79/vite-eslint": "0.0.1",
