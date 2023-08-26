@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import '@wangeditor/editor/dist/css/style.css';
-import { onBeforeUnmount, ref, shallowRef } from 'vue';
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
+import '@wangeditor/editor/dist/css/style.css'
+import { onBeforeUnmount, ref, shallowRef } from 'vue'
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
 export default {
   emits: ['update:modelValue'],
@@ -32,26 +32,26 @@ export default {
   },
   components: { Editor, Toolbar },
   setup(props, { emit }) {
-    const editorRef = shallowRef();
-    const valueHtml = ref('');
+    const editorRef = shallowRef()
+    const valueHtml = ref('')
 
-    const toolbarConfig = {};
-    const editorConfig = { placeholder: '请输入内容...' };
+    const toolbarConfig = {}
+    const editorConfig = { placeholder: '请输入内容...' }
 
     onBeforeUnmount(() => {
-      const editor = editorRef.value;
-      if (editor == null) return;
+      const editor = editorRef.value
+      if (editor == null) return
 
-      editor.destroy();
-    });
+      editor.destroy()
+    })
 
-    const handleCreated = (editor) => {
-      console.log('created', editor);
-      editorRef.value = editor;
-    };
-    const handleChange = (editor) => {
-      console.log('change:', editor.getHtml());
-    };
+    const handleCreated = editor => {
+      editorRef.value = editor
+    }
+    const handleChange = editor => {
+      valueHtml.value = editor.getHtml()
+      // console.log('change:', editor.getHtml());
+    }
 
     return {
       editorRef,
@@ -62,20 +62,20 @@ export default {
       handleCreated,
       handleChange,
       emitValueChange(newValue) {
-        emit('update:modelValue', { value: newValue });
+        emit('update:modelValue', { value: newValue })
       },
-    };
+    }
   },
   watch: {
     modelValue: {
       immediate: true,
       handler(newVal) {
-        this.valueHtml = newVal.value;
+        this.valueHtml = newVal.value
       },
     },
     valueHtml(newVal) {
-      this.emitValueChange(newVal);
+      this.emitValueChange(newVal)
     },
   },
-};
+}
 </script>
