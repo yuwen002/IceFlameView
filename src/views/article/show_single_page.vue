@@ -28,7 +28,7 @@
 
 <script>
 import { getCurrentInstance, reactive, ref, toRefs } from "vue";
-import { ShowSinglePage } from "@/api/arcitle";
+import { EditStatusSinglePage, ShowSinglePage } from "@/api/arcitle";
 
 export default {
   name: "singlePageList",
@@ -79,11 +79,27 @@ export default {
         total: +data.total
       }
     }
+
+    const handleStatus = async (row) => {
+      const isConfirmed = confirm(row.status ? '是否启用？' : '是否停用？')
+
+      if (isConfirmed) {
+        const statusData = {
+          status: row.status ? 0 : 1,
+          id: row.id,
+        }
+
+        const { code, message } = await EditStatusSinglePage(statusData)
+      }
+    }
+
+
     return {
       ...toRefs(state),
       proTable,
       getList,
       refresh,
+      handleStatus,
     }
   }
 };

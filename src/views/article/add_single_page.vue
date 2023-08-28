@@ -29,6 +29,7 @@
 <script>
 import { computed, getCurrentInstance, ref, shallowReactive, watch } from "vue";
 import wangEditor  from '@/components/WangEditor/wang-editor.vue'
+import { AddSinglePage } from "@/api/arcitle";
 
 export default {
   name: "singlePageAdd",
@@ -66,22 +67,21 @@ export default {
       }
 
       addForm.value.validate(async (valid) => {
-        // console.log(model.value)
-        // console.log(model.value)
-        // if (valid) {
-        //   loading = true
-        //   const { code, message } = await AddAuthPermission(model.value)
-        //   if (+code === 0) {
-        //     ctx.$message.success({
-        //       message: message,
-        //       duration: 1000,
-        //     })
-        //     addForm.value.resetFields()
-        //   } else {
-        //     ctx.$message.error(message)
-        //   }
-        //   loading = false
-        // }
+        model.value.content = valueHtml.value.value
+        if (valid) {
+          loading = true
+          const { code, message } = await AddSinglePage(model.value)
+          if (+code === 0) {
+            ctx.$message.success({
+              message: message,
+              duration: 1000,
+            })
+            addForm.value.resetFields()
+          } else {
+            ctx.$message.error(message)
+          }
+          loading = false
+        }
       })
     }
 

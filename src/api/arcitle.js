@@ -7,3 +7,19 @@ export const ShowSinglePage = params => {
     params,
   })
 }
+
+export const AddSinglePage = params => {
+  return request({
+    url: '/article/single_page/add',
+    method: 'post',
+    params,
+  })
+}
+
+export const EditStatusSinglePage = params => {
+  return request({
+    url: '/article/single_page/edit/status',
+    method: 'put',
+    params,
+  })
+}
