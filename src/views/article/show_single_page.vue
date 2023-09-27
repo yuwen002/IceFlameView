@@ -90,6 +90,17 @@ export default {
         }
 
         const { code, message } = await EditStatusSinglePage(statusData)
+
+        if (+code === 0) {
+          ctx.$message.success({
+            message: message,
+            duration: 1000,
+          })
+        } else {
+          ctx.$message.error(message)
+        }
+
+        proTable.value.refresh()
       }
     }
 
